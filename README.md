@@ -2,8 +2,6 @@
 Backend Server API
 
 ## Set up
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
-
 1. Clone this repository to your local machine git clone 
 2. cd into the cloned repository
 4. Install the node dependencies npm install
