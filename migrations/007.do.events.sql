@@ -18,6 +18,7 @@ CREATE TABLE events (
 
 /* removed due to possibly not needing
 host INTEGER REFERENCES hosts(host_id) ON DELETE CASCADE NOT NULL,
+
 changed event_zip to varchar(10) */
 
 CREATE TABLE hosts (

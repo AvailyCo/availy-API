@@ -7,13 +7,3 @@ CREATE TABLE timezone (
     zoneOffset TEXT NOT NULL DEFAULT '+00:00',
     zoneDesc TEXT NOT NULL DEFAULT 'Universal Time, Coordinated'
 );
-
-/* timezone offset DEFAULT 'UTC 0' NOT NULL,
-
-CREATE TYPE offset AS ENUM (
-  'UTC 0',
-  'EST -5',
-  'CST -6',
-  'MST -7'
-  'PST -8'
-); */
