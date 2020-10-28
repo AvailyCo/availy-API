@@ -3,13 +3,13 @@ BEGIN;
 INSERT INTO timezone(timezoneId, zoneName, zoneOffset, zoneDesc)
 
 VALUES
-    ('BIT', '-12:00', 'Baker Island Time'),
+    ('BIT', '-12:00', 'Baker Island Time'), 
     ('SST', '-11:00', 'Samoa Standard Time'),
     ('HST', '-10:00', 'Hawaii-Aleutian Standard Time'),
     ('MIT', '-09:30', 'Marquesas Islands Time'),
     ('AKST', '-09:00', 'Alaska Standard Time'),
     ('HDT', '-09:00', 'Hawaii-Aleutian Daylight Time'),
-    ('PST', '-08:00', 'Pacific Time (US & Canada)'),
+    ('PST', '-08:00', 'Pacific Standard Time'),
     ('AKDT', '-08:00', 'Alaska Daylight Time'),
     ('PDT', '-07:00', 'Pacific Daylight Time'),
     ('MST', '-07:00', 'Mountain Standard Time'),
