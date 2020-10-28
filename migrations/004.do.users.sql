@@ -12,5 +12,5 @@ CREATE TABLE users (
 	date_created TIMESTAMPTZ NOT NULL DEFAULT now(),
     date_modified TIMESTAMPTZ DEFAULT now(),
 	timezone INTEGER REFERENCES timezone(timezoneId),
-	weekId INTEGER REFERENCES weekId ON DELETE CASCADE NOT NULL
+	weekId INTEGER REFERENCES week(weekId) ON DELETE CASCADE NOT NULL
 );

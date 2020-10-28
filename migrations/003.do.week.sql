@@ -16,5 +16,5 @@ CREATE TABLE week (
     fri_pm_id INTEGER REFERENCES fri_PM(fri_PM_Id) NOT NULL,
     sat_am_id INTEGER REFERENCES sat_AM(sat_AM_Id) NOT NULL,
     sat_pm_id INTEGER REFERENCES sat_PM(sat_PM_Id) NOT NULL,
-    week_type TEXT NOT NULL, 
+    week_type TEXT NOT NULL
 );
