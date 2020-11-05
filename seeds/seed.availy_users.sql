@@ -7,8 +7,7 @@ VALUES
     ('sunny', 'Sunny', 'Lee', 'leesunny507@gmail.com', 'abc3', 'I am from New Jersey and a developer.', 'https://robohash.org/PA7.png?set=set4&size=150x150', now(), now(), 14, 3), 
     ('jing', 'Jing', 'Liang', 'jingliang0503@gmail.com', 'abc4', 'I am from Canada and part of UI/UX.', 'https://robohash.org/YP5.png?set=set4&size=150x150', now(), now(), 14, 4), 
     ('anugrah', 'Anugrah', 'Lambogo', 'lambogoai@gmail.com', 'abc5', 'I am from Illnois and a developer.', 'https://randomuser.me/api/portraits/lego/0.jpg', now(), now(), 12, 5), 
-    
-    ('dummy1', 'John', 'Doe', 'dummy1@abc.com', 'pass', 'abc6', 'I am from nowhere and will remain a mystery.', 'https://randomuser.me/api/portraits/lego/6.jpg', now(), now(), 4, 6),
-    ('dummy2', 'Jane', 'Doe', 'dummy2@abc.com', 'word', 'abc7', 'The way to get started is to quit talking and begin doing.', 'https://robohash.org/JaneDoe', now(), now(), 6, 7);
+    ('dummy1', 'John', 'Doe', 'dummy1@abc.com', 'abc6', 'I am from nowhere and will remain a mystery.', 'https://randomuser.me/api/portraits/lego/6.jpg', now(), now(), 4, 6),
+    ('dummy2', 'Jane', 'Doe', 'dummy2@abc.com', 'abc7', 'The way to get started is to quit talking and begin doing.', 'https://robohash.org/JaneDoe', now(), now(), 6, 7);
 
 COMMIT;
