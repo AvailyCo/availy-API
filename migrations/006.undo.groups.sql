@@ -1,2 +1,3 @@
 DROP TABLE IF EXISTS group_members;
+DROP TYPE IF EXISTS permissions;
 DROP TABLE IF EXISTS groups;
