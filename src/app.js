@@ -9,6 +9,12 @@ const errorHandler = require('./error-handler');
 
 /*routers*/
 const timezoneRouter = require('./timezone/timezone-router');
+const eventsRouter = require('./events/events-router');
+const guestsRouter = require('./guests/guests-router');
+const hostsRouter = require('./hosts/hosts-router');
+const usersRouter = require('./users/users-router');
+const weekRouter = require('./week/week-router');
+
 
 const app = express();
 
@@ -22,6 +28,11 @@ app.get('/api', (req, res) => {
 })
 
 app.use('/api/timezones', timezoneRouter);
+app.use('/api/events', eventsRouter);
+app.use('/api/guests', guestsRouter);
+app.use('/api/host', hostsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/week', weekRouter);
 
 app.use(errorHandler);
 
