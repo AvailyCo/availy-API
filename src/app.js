@@ -34,8 +34,6 @@ app.get('/api', (req, res) => {
     res.send('Hello, world! Welcome to Availy!')
 })
 
-
-//app.use('/api/timezones', timezoneRouter);
 app.use('/api/contacts', contactsRouter);
 app.use('/api/timezones', timezoneRouter);
 app.use('/api/groups', groupsRouter);
@@ -43,7 +41,7 @@ app.use('/api/groups', groupsRouter);
 // app.use('/api/guests', guestsRouter);
 app.use('/api/hosts', hostsRouter);
 // app.use('/api/users', usersRouter);
-// app.use('/api/week', weekRouter);
+app.use('/api/weeks', weekRouter);
 
 app.use(errorHandler);
 

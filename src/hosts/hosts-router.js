@@ -3,7 +3,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger');
 const HostsService = require('./hosts-service')
-/* const { getHostValidationError } = require('./validate-tips'); */
+/* const { getHostValidationError } = require('./validate-host'); */
 
 const HostsRouter = express.Router()
 const jsonParser = express.json()
@@ -108,7 +108,7 @@ HostsRouter
             });
         }
 
-        /* const error = getHostValidationError(tipToUpdate);
+        /* const error = getHostValidationError(hostToUpdate);
         if (error) {
             logger.error({
                 message: `PATCH Validation Error`,

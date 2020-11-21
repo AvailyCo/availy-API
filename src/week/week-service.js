@@ -2,8 +2,8 @@ const WeekService = {
     getAllWeeks(knex) {
         return knex.select('*').from('week');
     },
-    getWeekById(knex, weekId) {
-        return knex.from('week').select('*').where('weekId', weekId).first();
+    getWeekById(knex, weekid) {
+        return knex.from('week').select('*').where('weekid', weekid).first();
     },
     insertWeek(knex, newWeek) {
         return knex
@@ -14,14 +14,14 @@ const WeekService = {
                 return rows[0]
             })
     },
-    deleteWeek(knex, weekId) {
+    deleteWeek(knex, weekid) {
         return knex('week')
-            .where({ weekId })
+            .where({ weekid })
             .delete()
     },
-    updateWeek(knex, weekId, newWeekFields) {
+    updateWeek(knex, weekid, newWeekFields) {
         return knex('week')
-            .where({ weekId })
+            .where({ weekid })
             .update(newWeekFields)
     }
 }

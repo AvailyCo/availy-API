@@ -15,22 +15,28 @@ const contactsService = {
   },
   getContactId(db, user1, user2) {
     return db('contacts')
-      .where({user1_id: user1,
-        user2_id: user2})
-      .orWhere({user1_id: user2,
-        user2_id: user1})
+      .where({
+        user1_id: user1,
+        user2_id: user2
+      })
+      .orWhere({
+        user1_id: user2,
+        user2_id: user1
+      })
       .returning('contactid');
   },
   blockContact(db, contactId, blockStatus, userId) {
     return db('contacts')
-      .where({contactid: contactId})
-      .update({blocked: blockStatus,
-        blocked_by: userId})
+      .where({ contactid: contactId })
+      .update({
+        blocked: blockStatus,
+        blocked_by: userId
+      })
       .returning('*');
   },
   deleteContact(db, contactId) {
     return db('contacts')
-      .where({contactid: contactId})
+      .where({ contactid: contactId })
       .delete();
   },
 }
