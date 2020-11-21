@@ -10,5 +10,5 @@ VALUES
     (3, 4, false, null, now()),
     (3, 5, false, null, now()),
     (4, 5, false, null, now()),
-    (7, 1, true, 6, now());
+    (7, 1, true, null, now());
 COMMIT;

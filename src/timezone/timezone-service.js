@@ -1,5 +1,5 @@
 const TimezoneService = {
-    getAllTimezones(knex) {
+    getAllZones(knex) {
         return knex.select('*').from('timezone');
     },
     getTimezoneById(knex, timezoneid) {
@@ -26,4 +26,8 @@ const TimezoneService = {
     }
 }
 
+
 //module.exports = FoldersService;
+
+module.exports = TimezoneService;
+
