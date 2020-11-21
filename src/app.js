@@ -34,7 +34,7 @@ app.use('/api/timezones', timezoneRouter);
 app.use('/api/groups', groupsRouter);
 // app.use('/api/events', eventsRouter); <= do this next
 // app.use('/api/guests', guestsRouter);
-// app.use('/api/host', hostsRouter);
+//app.use('/api/host', hostsRouter);
 // app.use('/api/users', usersRouter);
 // app.use('/api/week', weekRouter);
 
