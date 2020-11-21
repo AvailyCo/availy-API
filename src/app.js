@@ -7,7 +7,11 @@ const cors = require('cors');
 
 const { NODE_ENV } = require('./config')
 const errorHandler = require('./error-handler');
+
+const contactsRouter = require('./contacts/contacts-router');
+
 //const validateBearerToken = require('./validate-token');
+
 
 /*routers*/
 const timezoneRouter = require('./timezone/timezone-router');
@@ -30,6 +34,9 @@ app.get('/api', (req, res) => {
     res.send('Hello, world! Welcome to Availy!')
 })
 
+
+//app.use('/api/timezones', timezoneRouter);
+app.use('/api/contacts', contactsRouter);
 app.use('/api/timezones', timezoneRouter);
 app.use('/api/groups', groupsRouter);
 // app.use('/api/events', eventsRouter); <= do this next
