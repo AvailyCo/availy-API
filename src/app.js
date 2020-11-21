@@ -30,7 +30,7 @@ app.get('/api', (req, res) => {
     res.send('Hello, world! Welcome to Availy!')
 })
 
-// app.use('/api/timezones', timezoneRouter);
+app.use('/api/timezones', timezoneRouter);
 app.use('/api/groups', groupsRouter);
 // app.use('/api/events', eventsRouter); <= do this next
 // app.use('/api/guests', guestsRouter);
