@@ -12,7 +12,7 @@ CREATE TABLE events (
     event_zip VARCHAR(10),
     event_time TIMESTAMPTZ,
     event_date DATE NOT NULL,
-    event_timezone INTEGER REFERENCES timezone(timezoneId) NOT NULL,
+    event_timezone INTEGER REFERENCES timezone(timezoneid) NOT NULL,
     week_id INTEGER REFERENCES week(weekId) NOT NULL
 );
 
