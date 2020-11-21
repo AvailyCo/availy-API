@@ -2,8 +2,8 @@ const TimezoneService = {
     getAllZones(knex) {
         return knex.select('*').from('timezone');
     },
-    getTimezoneById(knex, timezoneId) {
-        return knex.from('timezone').select('*').where('timezoneId', timezoneId).first();
+    getTimezoneById(knex, timezoneid) {
+        return knex.from('timezone').select('*').where('timezoneid', timezoneid).first();
     },
     insertTimezone(knex, newTimeZone) {
         return knex
@@ -14,14 +14,14 @@ const TimezoneService = {
                 return rows[0]
             })
     },
-    deleteTimezone(knex, timezoneId) {
+    deleteTimezone(knex, timezoneid) {
         return knex('timezone')
-            .where({ timezoneId })
+            .where({ timezoneid })
             .delete()
     },
-    updateTimezone(knex, timezoneId, newTimezoneFields) {
+    updateTimezone(knex, timezoneid, newTimezoneFields) {
         return knex('timezone')
-            .where({ timezoneId })
+            .where({ timezoneid })
             .update(newTimezoneFields)
     }
 }

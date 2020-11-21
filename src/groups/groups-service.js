@@ -14,7 +14,7 @@ const GroupService = {
       .first();
   },
   insertGroup(db, newGroup) {
-    return db 
+    return db
       .insert(newGroup)
       .into('groups')
       .returning('*')
@@ -32,7 +32,7 @@ const GroupService = {
       .where({ groupid })
       .delete();
   },
-  getGroupMemberByID(db, member_id){
+  getGroupMemberByID(db, member_id) {
     return GroupService.getGroupMembers(db, member_id)
       .where({ member_id })
       .first();
@@ -44,7 +44,7 @@ const GroupService = {
       .returning('*')
       .then(([members]) => members)
       .then(member =>
-        GroupService.getGroupMemberByID(db, member.member_id)  
+        GroupService.getGroupMemberByID(db, member.member_id)
       );
   },
   getGroupMembers(db, group_id) {

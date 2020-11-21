@@ -21,7 +21,7 @@ groupsRouter
     const { group_name, about_group, group_image, founder } = req.body;
     const newGroup = { group_name, about_group, group_image, founder };
 
-    for (const [ key, value] of Object.entries(newGroup)) {
+    for (const [key, value] of Object.entries(newGroup)) {
       if (value == null) {
         return res
           .status(400)
@@ -86,7 +86,7 @@ groupsRouter
       .catch(next);
   })
 
-groupsRouter  
+groupsRouter
   .route('/:groupId/members')
   .all(checkGroupExists)
   .get((req, res, next) => {
@@ -135,12 +135,12 @@ groupsRouter
       req.app.get('db'),
       removeMemberID
     )
-    .then(numRowsAffected => {
-      res
-        .status(204)
-        .end();
-    })
-    .catch(next);
+      .then(numRowsAffected => {
+        res
+          .status(204)
+          .end();
+      })
+      .catch(next);
   })
 
 async function checkGroupExists(req, res, next) {
@@ -158,7 +158,7 @@ async function checkGroupExists(req, res, next) {
 
     res.group = group;
     next();
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 }

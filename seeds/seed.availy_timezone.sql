@@ -1,6 +1,6 @@
 /*https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations*/
 BEGIN;
-INSERT INTO timezone(zoneName, zoneOffset, zoneDesc)
+INSERT INTO timezone(zonename, zoneoffset, zonedesc)
 
 VALUES
     ('BIT', '-12:00', 'Baker Island Time'), 
