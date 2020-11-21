@@ -20,7 +20,7 @@ const serializeTimezone = zone => ({
     zoneDesc: xss(zone.zoneDesc)
 });
 
-timeZoneRouter
+timezoneRouter
     .route('/')
     .get((req, res, next) => {
         TimezoneService.getAllZones(
@@ -69,7 +69,7 @@ timeZoneRouter
             .catch(next)
     })
 
-timeZoneRouter
+timezoneRouter
     .route('/:timezoneId')
     .all((req, res, next) => {
         TimezoneService.getTimezoneById(
@@ -138,4 +138,4 @@ timeZoneRouter
             .catch(next)
     })
 
-module.exports = timeZoneRouter;
+module.exports = timezoneRouter;
