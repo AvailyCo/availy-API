@@ -8,7 +8,7 @@ const WedPMRouter = express.Router()
 const jsonParser = express.json()
 
 const getDay = day => ({
-    wed_pm_id: day.wed_PM_Id,
+    wed_pm_id: day.wed_pm_id,
     wed_pm12: day.wed_pm12,
     wed_pm1230: day.wed_pm1230,
     wed_pm1: day.wed_pm1,

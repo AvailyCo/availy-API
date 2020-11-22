@@ -8,7 +8,7 @@ const SunPMRouter = express.Router()
 const jsonParser = express.json()
 
 const getDay = day => ({
-    sun_pm_id: day.sun_PM_Id,
+    sun_pm_id: day.sun_pm_id,
     sun_pm12: day.sun_pm12,
     sun_pm1230: day.sun_pm1230,
     sun_pm1: day.sun_pm1,
