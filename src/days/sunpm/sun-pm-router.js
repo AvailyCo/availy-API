@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
-const logger = require('../logger');
+const logger = require('../../logger');
 const SunPMService = require('./sun-pm-service')
-const { getDayValidationError } = require('./validate-day');
+const { getDayValidationError } = require('../validate-day');
 
 const SunPMRouter = express.Router()
 const jsonParser = express.json()
@@ -59,16 +59,16 @@ SunPMRouter
             }
         }
 
-        /*  const error = getDayValidationError(newDay);
-         if (error) {
-             logger.error({
-                 message: `POST Validation Error`,
-                 request: `${req.originalUrl}`,
-                 method: `${req.method}`,
-                 ip: `${req.ip}`
-             });
-             return res.status(400).send(error);
-         } */
+        const error = getDayValidationError(newDay);
+        if (error) {
+            logger.error({
+                message: `POST Validation Error`,
+                request: `${req.originalUrl}`,
+                method: `${req.method}`,
+                ip: `${req.ip}`
+            });
+            return res.status(400).send(error);
+        }
 
         SunPMService.insertSunPM(
             req.app.get('db'),
@@ -129,16 +129,16 @@ SunPMRouter
             });
         }
 
-        /*  const error = getDayValidationError(updateDay);
-         if (error) {
-             logger.error({
-                 message: `POST Validation Error`,
-                 request: `${req.originalUrl}`,
-                 method: `${req.method}`,
-                 ip: `${req.ip}`
-             });
-             return res.status(400).send(error);
-         } */
+        const error = getDayValidationError(updateDay);
+        if (error) {
+            logger.error({
+                message: `POST Validation Error`,
+                request: `${req.originalUrl}`,
+                method: `${req.method}`,
+                ip: `${req.ip}`
+            });
+            return res.status(400).send(error);
+        }
 
         SunPMService.updateSunPM(
             req.app.get('db'),

@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
-const logger = require('../logger');
+const logger = require('../../logger');
 const FriPMService = require('./fri-pm-service')
-const { getDayValidationError } = require('./validate-day');
+const { getDayValidationError } = require('../validate-day');
 
 const FriPMRouter = express.Router()
 const jsonParser = express.json()
@@ -59,16 +59,16 @@ FriPMRouter
             }
         }
 
-        /*  const error = getDayValidationError(newDay);
-         if (error) {
-             logger.error({
-                 message: `POST Validation Error`,
-                 request: `${req.originalUrl}`,
-                 method: `${req.method}`,
-                 ip: `${req.ip}`
-             });
-             return res.status(400).send(error);
-         } */
+        const error = getDayValidationError(newDay);
+        if (error) {
+            logger.error({
+                message: `POST Validation Error`,
+                request: `${req.originalUrl}`,
+                method: `${req.method}`,
+                ip: `${req.ip}`
+            });
+            return res.status(400).send(error);
+        }
 
         FriPMService.insertFriPM(
             req.app.get('db'),
@@ -129,16 +129,16 @@ FriPMRouter
             });
         }
 
-        /*  const error = getDayValidationError(updateDay);
-         if (error) {
-             logger.error({
-                 message: `POST Validation Error`,
-                 request: `${req.originalUrl}`,
-                 method: `${req.method}`,
-                 ip: `${req.ip}`
-             });
-             return res.status(400).send(error);
-         } */
+        const error = getDayValidationError(updateDay);
+        if (error) {
+            logger.error({
+                message: `POST Validation Error`,
+                request: `${req.originalUrl}`,
+                method: `${req.method}`,
+                ip: `${req.ip}`
+            });
+            return res.status(400).send(error);
+        }
 
         FriPMService.updateFriPM(
             req.app.get('db'),
