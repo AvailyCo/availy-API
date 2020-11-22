@@ -26,8 +26,4 @@ const TimezoneService = {
     }
 }
 
-
-//module.exports = FoldersService;
-
 module.exports = TimezoneService;
-
