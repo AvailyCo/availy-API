@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
-const logger = require('../../logger');
-const FriPMService = require('./fri-pm-service')
-const { getDayValidationError } = require('../validate-day');
+const FriPMService = require('./fri-pm-service');
+const logger = require('../../../logger');
+const { getDayValidationError } = require('../../validate-day');
 
 const FriPMRouter = express.Router()
 const jsonParser = express.json()

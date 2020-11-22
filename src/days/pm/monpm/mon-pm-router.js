@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
-const logger = require('../../logger');
+const logger = require('../../../logger');
+const { getDayValidationError } = require('../../validate-day');
 const MonPMService = require('./mon-pm-service')
-const { getDayValidationError } = require('../validate-day');
 
 const MonPMRouter = express.Router()
 const jsonParser = express.json()

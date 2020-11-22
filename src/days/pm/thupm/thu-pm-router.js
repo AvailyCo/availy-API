@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
-const logger = require('../../logger');
+const logger = require('../../../logger');
+const { getDayValidationError } = require('../../validate-day');
 const ThuPMService = require('./thu-pm-service')
-const { getDayValidationError } = require('../validate-day');
 
 const ThuPMRouter = express.Router()
 const jsonParser = express.json()

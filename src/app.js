@@ -20,13 +20,13 @@ const hostsRouter = require('./hosts/hosts-router');
 const usersRouter = require('./users/users-router');
 const weekRouter = require('./week/week-router');
 
-const SunPMRouter = require('./days/sunpm/sun-pm-router');
-const MonPMRouter = require('./days/monpm/mon-pm-router');
-const TuePMRouter = require('./days/tuepm/tue-pm-router');
-const WedPMRouter = require('./days/wedpm/wed-pm-router');
-const ThuPMRouter = require('./days/thupm/thu-pm-router');
-const FriPMRouter = require('./days/fripm/fri-pm-router');
-const SatPMRouter = require('./days/satpm/sat-pm-router');
+const SunPMRouter = require('./days/pm/sunpm/sun-pm-router');
+const MonPMRouter = require('./days/pm/monpm/mon-pm-router');
+const TuePMRouter = require('./days/pm/tuepm/tue-pm-router');
+const WedPMRouter = require('./days/pm/wedpm/wed-pm-router');
+const ThuPMRouter = require('./days/pm/thupm/thu-pm-router');
+const FriPMRouter = require('./days/pm/fripm/fri-pm-router');
+const SatPMRouter = require('./days/pm/satpm/sat-pm-router');
 
 
 const app = express();

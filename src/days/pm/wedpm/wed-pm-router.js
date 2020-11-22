@@ -1,8 +1,8 @@
 const path = require('path')
 const express = require('express')
-const logger = require('../../logger');
-const WedPMService = require('./wed-pm-service')
-const { getDayValidationError } = require('../validate-day');
+const logger = require('../../../logger');
+const { getDayValidationError } = require('../../validate-day');
+const WedPMService = require('./wed-pm-service');
 
 const WedPMRouter = express.Router()
 const jsonParser = express.json()
