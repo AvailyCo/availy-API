@@ -1,6 +1,7 @@
 const contactsService = {
   getAllContacts(db, userId) {
     return db('contacts')
+      .select('*')
       .where('user1_id', userId)
       .orWhere('user2_id', userId);
   },
@@ -15,6 +16,7 @@ const contactsService = {
   },
   getContactId(db, user1, user2) {
     return db('contacts')
+      .select('*')
       .where({
         user1_id: user1,
         user2_id: user2
