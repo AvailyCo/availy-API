@@ -12,7 +12,7 @@ const serializeGuest = guest => ({
     attending_id: guest.attending_id,
     event_id: guest.event_id,
     user_id: xss(guest.user_id),
-    attending: xss(guest.attending)
+    attending: guest.attending
 });
 
 GuestsRouter
