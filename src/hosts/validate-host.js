@@ -1,6 +1,6 @@
 const logger = require('../logger');
 
-//check title posted is greater than 3 characters and 
+//check host request body contains only integers
 function getHostValidationError({ host }) {
     if (!host.isInteger) {
         logger.error(`Invalid request given for host`);

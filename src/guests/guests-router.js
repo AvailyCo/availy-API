@@ -3,7 +3,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger');
 const GuestsService = require('./guests-service')
-//const { getGuestValidationError } = require('./validate-guests');
+const { getGuestValidationError } = require('./validate-guests');
 
 const GuestsRouter = express.Router()
 const jsonParser = express.json()
@@ -39,7 +39,7 @@ GuestsRouter
             }
         }
 
-        /* const error = getGuestValidationError(newGuest);
+        const error = getGuestValidationError(newGuest);
         if (error) {
             logger.error({
                 message: `POST Validation Error`,
@@ -48,7 +48,7 @@ GuestsRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         GuestsService.insertGuest(
             req.app.get('db'),
@@ -109,7 +109,7 @@ GuestsRouter
             });
         }
 
-        /* const error = getGuestValidationError(guestToUpdate);
+        const error = getGuestValidationError(guestToUpdate);
         if (error) {
             logger.error({
                 message: `PATCH Validation Error`,
@@ -118,7 +118,7 @@ GuestsRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         GuestsService.updateGuest(
             req.app.get('db'),

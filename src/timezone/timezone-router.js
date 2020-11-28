@@ -3,7 +3,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger');
 const TimezoneService = require('./timezone-service')
-//const { timezoneValidationError } = require('./validate-timezone');
+const { timezoneValidationError } = require('./validate-timezone');
 
 const timezoneRouter = express.Router()
 const jsonParser = express.json()
@@ -41,9 +41,9 @@ timezoneRouter
             }
         }
 
-        //const error = getTimezoneValidationError(newTimezone);
+        const error = getTimezoneValidationError(newTimezone);
 
-        /* if (error) {
+        if (error) {
             logger.error({
                 message: `POST Validation Error`,
                 request: `${req.originalUrl}`,
@@ -51,7 +51,7 @@ timezoneRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         TimezoneService.insertTimezone(
             req.app.get('db'),
@@ -113,8 +113,8 @@ timezoneRouter
             });
         }
 
-        //const error = getTimezoneValidationError(zoneToUpdate);
-        /* if (error) {
+        const error = getTimezoneValidationError(zoneToUpdate);
+        if (error) {
             logger.error({
                 message: `PATCH Validation Error`,
                 request: `${req.originalUrl}`,
@@ -122,7 +122,7 @@ timezoneRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         TimezoneService.updateTimezone(
             req.app.get('db'),
