@@ -46,7 +46,7 @@ app.use('/api/groups', groupsRouter);
 // app.use('/api/events', eventsRouter); <= do this next
 app.use('/api/guests', guestsRouter);
 app.use('/api/hosts', hostsRouter);
-// app.use('/api/users', usersRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/weeks', weekRouter);
 
 app.use('/api/SunPM', SunPMRouter);
