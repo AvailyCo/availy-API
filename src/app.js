@@ -31,7 +31,7 @@ app.use(cors());
 //app.use(validateBearerToken);
 
 app.get('/api', (req, res) => {
-    res.send('Hello, world! Welcome to Availy!')
+    res.send('Hello, world! Welcome to Availy API!')
 })
 
 app.use('/api/contacts', contactsRouter);

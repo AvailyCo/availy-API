@@ -3,7 +3,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger');
 const HostsService = require('./hosts-service')
-/* const { getHostValidationError } = require('./validate-host'); */
+const { getHostValidationError } = require('./validate-host');
 
 const HostsRouter = express.Router()
 const jsonParser = express.json()
@@ -38,7 +38,7 @@ HostsRouter
             }
         }
 
-        /* const error = getHostValidationError(newHost);
+        const error = getHostValidationError(newHost);
         if (error) {
             logger.error({
                 message: `POST Validation Error`,
@@ -47,7 +47,7 @@ HostsRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         HostsService.insertHost(
             req.app.get('db'),
@@ -108,7 +108,7 @@ HostsRouter
             });
         }
 
-        /* const error = getHostValidationError(hostToUpdate);
+        const error = getHostValidationError(hostToUpdate);
         if (error) {
             logger.error({
                 message: `PATCH Validation Error`,
@@ -117,7 +117,7 @@ HostsRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         HostsService.updateHost(
             req.app.get('db'),

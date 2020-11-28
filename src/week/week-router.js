@@ -3,7 +3,7 @@ const express = require('express')
 const xss = require('xss')
 const logger = require('../logger');
 const WeeksService = require('./week-service')
-//const { getWeekValidationError } = require('./validate-week');
+const { getWeekValidationError } = require('./validate-week');
 
 const WeeksRouter = express.Router()
 const jsonParser = express.json()
@@ -55,7 +55,7 @@ WeeksRouter
             }
         }
 
-        /* const error = getWeekValidationError(newWeek);
+        const error = getWeekValidationError(newWeek);
         if (error) {
             logger.error({
                 message: `POST Validation Error`,
@@ -64,7 +64,7 @@ WeeksRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         WeeksService.insertWeek(
             req.app.get('db'),
@@ -129,7 +129,7 @@ WeeksRouter
             });
         }
 
-        /* const error = getWeekValidationError(weekToUpdate);
+        const error = getWeekValidationError(weekToUpdate);
         if (error) {
             logger.error({
                 message: `PATCH Validation Error`,
@@ -138,7 +138,7 @@ WeeksRouter
                 ip: `${req.ip}`
             });
             return res.status(400).send(error);
-        } */
+        }
 
         WeeksService.updateWeek(
             req.app.get('db'),
