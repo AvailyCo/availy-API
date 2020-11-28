@@ -32,7 +32,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/timezones', timezoneRouter);
 app.use('/api/groups', groupsRouter);
-// app.use('/api/events', eventsRouter); <= do this next
+app.use('/api/events', eventsRouter);
 // app.use('/api/guests', guestsRouter);
 // app.use('/api/host', hostsRouter);
 // app.use('/api/users', usersRouter);

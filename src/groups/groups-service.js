@@ -32,8 +32,8 @@ const GroupService = {
       .where({ groupid })
       .delete();
   },
-  getGroupMemberByID(db, member_id) {
-    return GroupService.getGroupMembers(db, member_id)
+  getGroupMemberByID(db, group_id, member_id) {
+    return GroupService.getGroupMembers(db, group_id)
       .where({ member_id })
       .first();
   },
