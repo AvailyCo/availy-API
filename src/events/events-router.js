@@ -191,7 +191,7 @@ eventsRouter
     const guestPatch = { attending };
 
     const numOfValues = Object.values(guestPatch);
-    if (numOfValues === 0) {
+    if (numOfValues == 0) {
       return res
         .status(400)
         .json({
