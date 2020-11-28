@@ -21,7 +21,7 @@ eventsRouter
     const {
       // host_id, << should effectively remove need for 'hosts' table
       event_name,
-      about_event, 
+      about_event,
       event_location, // rename to 'venue_name' for building identities
       // event_link, << for online only events
       // event_street, << clearer labeling for physical addresses
@@ -40,7 +40,7 @@ eventsRouter
 
     const newEvent = {
       event_name,
-      about_event, 
+      about_event,
       event_location,
       event_city,
       event_state,
@@ -84,7 +84,7 @@ eventsRouter
     const {
       // host_id,
       event_name,
-      about_event, 
+      about_event,
       event_location,
       event_city,
       event_state,
@@ -98,7 +98,7 @@ eventsRouter
     const eventPatch = {
       // host_id,
       event_name,
-      about_event, 
+      about_event,
       event_location,
       event_city,
       event_state,
@@ -110,7 +110,7 @@ eventsRouter
     };
 
     const numOfValues = Object.values(eventPatch);
-    if (numOfValues === 0) {
+    if (numOfValues == 0) {
       return res
         .status(400)
         .json({
@@ -179,7 +179,7 @@ eventsRouter
       .catch(next);
   })
 
-  
+
 eventsRouter
   .route('/:eventId/guests/:guestId')
   .all(checkGuestExists)
@@ -240,7 +240,7 @@ async function checkEventExists(req, res, next) {
 
     res.event = event;
     next();
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
 }
