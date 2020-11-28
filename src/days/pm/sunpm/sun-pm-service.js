@@ -1,12 +1,12 @@
 const SunPMService = {
-    getAllSunPM(knex) {
-        return knex.select('*').from('sun_pm');
+    getAllSunPM(db) {
+        return db.select('*').from('sun_pm');
     },
-    getSunPMById(knex, sun_pm_id) {
-        return knex.from('sun_pm').select('*').where('sun_pm_id', sun_pm_id).first();
+    getSunPMById(db, sun_pm_id) {
+        return db.from('sun_pm').select('*').where('sun_pm_id', sun_pm_id).first();
     },
-    insertSunPM(knex, newSunPM) {
-        return knex
+    insertSunPM(db, newSunPM) {
+        return db
             .insert(newSunPM)
             .into('sun_pm')
             .returning('*')
@@ -14,13 +14,13 @@ const SunPMService = {
                 return rows[0]
             })
     },
-    deleteSunPM(knex, sun_pm_id) {
-        return knex('sun_pm')
+    deleteSunPM(db, sun_pm_id) {
+        return db('sun_pm')
             .where({ sun_pm_id })
             .delete()
     },
-    updateSunPM(knex, sun_pm_id, newSunPMFields) {
-        return knex('sun_pm')
+    updateSunPM(db, sun_pm_id, newSunPMFields) {
+        return db('sun_pm')
             .where({ sun_pm_id })
             .update(newSunPMFields)
     }

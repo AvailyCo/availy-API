@@ -1,12 +1,12 @@
 const GuestService = {
-    getAllGuests(knex) {
-        return knex.select('*').from('guests');
+    getAllGuests(db) {
+        return db.select('*').from('guests');
     },
-    getGuestById(knex, attending_id) {
-        return knex.from('guests').select('*').where('attending_id', attending_id).first();
+    getGuestById(db, attending_id) {
+        return db.from('guests').select('*').where('attending_id', attending_id).first();
     },
-    insertGuest(knex, newGuest) {
-        return knex
+    insertGuest(db, newGuest) {
+        return db
             .insert(newGuest)
             .into('guests')
             .returning('*')
@@ -14,13 +14,13 @@ const GuestService = {
                 return rows[0]
             })
     },
-    deleteGuest(knex, attending_id) {
-        return knex('guests')
+    deleteGuest(db, attending_id) {
+        return db('guests')
             .where({ attending_id })
             .delete()
     },
-    updateGuest(knex, attending_id, newGuestFields) {
-        return knex('guests')
+    updateGuest(db, attending_id, newGuestFields) {
+        return db('guests')
             .where({ attending_id })
             .update(newGuestFields)
     }

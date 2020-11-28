@@ -4,11 +4,11 @@ const xss = require('xss');
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/
 
 const UsersService = {
-  getAllUsers(knex) {
-    return knex.select('*').from('users')
+  getAllUsers(db) {
+    return db.select('*').from('users')
   },
-  getById(knex, userId) {
-    return knex.from('users').select('*').where('userid', userId || 0).first()
+  getById(db, userId) {
+    return db.from('users').select('*').where('userid', userId || 0).first()
   },
   hasUserWithUserName(db, username) {
     return db('users')
@@ -28,8 +28,8 @@ const UsersService = {
       .where({ userid })
       .update(newUserFields);
   },
-  deleteUser(knex, username) {
-    return knex('users')
+  deleteUser(db, username) {
+    return db('users')
       .where({ username })
       .delete()
   },

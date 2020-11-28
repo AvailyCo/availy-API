@@ -1,12 +1,12 @@
 const EventsService = {
-    getAllEvents(knex) {
-        return knex.select('*').from('events');
+    getAllEvents(db) {
+        return db.select('*').from('events');
     },
-    getEventById(knex, event_id) {
-        return knex.from('events').select('*').where('event_id', event_id).first();
+    getEventById(db, event_id) {
+        return db.from('events').select('*').where('event_id', event_id).first();
     },
-    insertEvent(knex, newEvent) {
-        return knex
+    insertEvent(db, newEvent) {
+        return db
             .insert(newEvent)
             .into('events')
             .returning('*')
@@ -14,13 +14,13 @@ const EventsService = {
                 return rows[0]
             })
     },
-    deleteEvent(knex, event_id) {
-        return knex('events')
+    deleteEvent(db, event_id) {
+        return db('events')
             .where({ event_id })
             .delete()
     },
-    updateEvent(knex, event_id, newEventFields) {
-        return knex('events')
+    updateEvent(db, event_id, newEventFields) {
+        return db('events')
             .where({ event_id })
             .update(newEventFields)
     }

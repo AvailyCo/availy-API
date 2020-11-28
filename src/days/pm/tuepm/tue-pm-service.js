@@ -1,12 +1,12 @@
 const TuePMService = {
-    getAllTuePM(knex) {
-        return knex.select('*').from('tue_pm');
+    getAllTuePM(db) {
+        return db.select('*').from('tue_pm');
     },
-    getTuePMById(knex, tue_pm_id) {
-        return knex.from('tue_pm').select('*').where('tue_pm_id', tue_pm_id).first();
+    getTuePMById(db, tue_pm_id) {
+        return db.from('tue_pm').select('*').where('tue_pm_id', tue_pm_id).first();
     },
-    insertTuePM(knex, newTuePM) {
-        return knex
+    insertTuePM(db, newTuePM) {
+        return db
             .insert(newTuePM)
             .into('tue_pm')
             .returning('*')
@@ -14,13 +14,13 @@ const TuePMService = {
                 return rows[0]
             })
     },
-    deleteTuePM(knex, tue_pm_id) {
-        return knex('tue_pm')
+    deleteTuePM(db, tue_pm_id) {
+        return db('tue_pm')
             .where({ tue_pm_id })
             .delete()
     },
-    updateTuePM(knex, tue_pm_id, newTuePMFields) {
-        return knex('tue_pm')
+    updateTuePM(db, tue_pm_id, newTuePMFields) {
+        return db('tue_pm')
             .where({ tue_pm_id })
             .update(newTuePMFields)
     }

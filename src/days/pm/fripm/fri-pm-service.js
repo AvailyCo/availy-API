@@ -1,12 +1,12 @@
 const FriPMService = {
-    getAllFriPM(knex) {
-        return knex.select('*').from('fri_pm');
+    getAllFriPM(db) {
+        return db.select('*').from('fri_pm');
     },
-    getFriPMById(knex, fri_pm_id) {
-        return knex.from('fri_pm').select('*').where('fri_pm_id', fri_pm_id).first();
+    getFriPMById(db, fri_pm_id) {
+        return db.from('fri_pm').select('*').where('fri_pm_id', fri_pm_id).first();
     },
-    insertFriPM(knex, newFriPM) {
-        return knex
+    insertFriPM(db, newFriPM) {
+        return db
             .insert(newFriPM)
             .into('fri_pm')
             .returning('*')
@@ -14,13 +14,13 @@ const FriPMService = {
                 return rows[0]
             })
     },
-    deleteFriPM(knex, fri_pm_id) {
-        return knex('fri_pm')
+    deleteFriPM(db, fri_pm_id) {
+        return db('fri_pm')
             .where({ fri_pm_id })
             .delete()
     },
-    updateFriPM(knex, fri_pm_id, newFriPMFields) {
-        return knex('fri_pm')
+    updateFriPM(db, fri_pm_id, newFriPMFields) {
+        return db('fri_pm')
             .where({ fri_pm_id })
             .update(newFriPMFields)
     }
