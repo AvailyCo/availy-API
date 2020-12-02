@@ -1,5 +1,8 @@
 const contactsService = {
-  getAllContacts(db, userId) {
+  getAllContacts(db) {
+    return db.select('*').from('contacts');
+  },
+  getUserContacts(db, userId) {
     return db('contacts')
       .select('*')
       .where('user1_id', userId)
