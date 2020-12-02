@@ -1,7 +1,9 @@
 const xss = require('xss');
 //const bcrypt = require('bcryptjs');
 
-const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/
+const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
+
+const validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const UsersService = {
   getAllUsers(db) {
@@ -28,9 +30,9 @@ const UsersService = {
       .where({ userid })
       .update(newUserFields);
   },
-  deleteUser(db, username) {
+  deleteUser(db, userid) {
     return db('users')
-      .where({ username })
+      .where({ userid })
       .delete()
   },
   validatePassword(password) {
@@ -48,6 +50,48 @@ const UsersService = {
     }
     return null
   },
+  validateName(name) {
+    if (name.length < 1) {
+      return 'This field is required'
+    }
+    if (name.length > 72) {
+      return 'names/usernames must be less than 72 characters'
+    }
+    return null
+  },
+  validateEmail(email) {
+    if (!validEmail.test(email))
+    {
+      return 'Please enter a valid email address'
+    }  
+    return null
+  },
+  validateAboutMe(aboutMe) {
+    if (aboutMe.length > 200) {
+      return 'Character limit for about me is 200 characters'
+    }
+    return null
+  },
+  validateTimeZone(timezone) {
+    if (isNaN(timezone)) {
+      return 'timezone value should be a number'
+    }
+    if (timezone < 1 || timezone > 49) {
+      return 'timezone value should be between 1-49'
+    }
+    return null
+  },
+  validateWeekId(weekId) {
+    if (isNaN(weekId)) {
+      return 'week Id should be a number'
+    }
+    if (weekId < 1 || weekId > 8) {
+      return 'week Id should be between 1-8'
+    }
+    return null
+  },
+
+
   /*  hashPassword(password) {
          return bcrypt.hash(password, 12)
      }, */
