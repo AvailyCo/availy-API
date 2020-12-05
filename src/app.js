@@ -28,7 +28,6 @@ const ThuPMRouter = require('./days/pm/thupm/thu-pm-router');
 const FriPMRouter = require('./days/pm/fripm/fri-pm-router');
 const SatPMRouter = require('./days/pm/satpm/sat-pm-router');
 
-
 const app = express();
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', { skip: () => NODE_ENV === 'test' }))
