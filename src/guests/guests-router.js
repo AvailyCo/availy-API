@@ -1,6 +1,5 @@
 const path = require('path')
-const express = require('express')
-const xss = require('xss')
+const express = require('express');
 const logger = require('../logger');
 const GuestsService = require('./guests-service')
 const { getGuestValidationError } = require('./validate-guests');
@@ -8,10 +7,10 @@ const { getGuestValidationError } = require('./validate-guests');
 const GuestsRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeGuest = guest => ({
+const tempGuest = guest => ({
     attending_id: guest.attending_id,
     event_id: guest.event_id,
-    user_id: xss(guest.user_id),
+    user_id: guest.user_id,
     attending: guest.attending
 });
 
@@ -22,7 +21,7 @@ GuestsRouter
             req.app.get('db')
         )
             .then(guests => {
-                res.json(guests.map(serializeGuest))
+                res.json(guests.map(tempGuest))
             })
             .catch(next)
     })
@@ -58,7 +57,7 @@ GuestsRouter
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${guest.attending_id}`))
-                    .json(serializeGuest(guest))
+                    .json(guest)
             })
             .catch(next)
     })
@@ -82,7 +81,7 @@ GuestsRouter
             .catch(next)
     })
     .get((req, res, next) => {
-        res.json(serializeGuest(res.guest))
+        res.json(res.guest)
     })
 
     .delete((req, res, next) => {
