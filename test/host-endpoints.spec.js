@@ -2,7 +2,7 @@ const knex = require('knex')
 const app = require('../src/app')
 
 /************Add Fixtures****************/
-//const { makeFoldersArray, makeMaliciousFolder } = require('./host-fixtures')
+//const { makeHostsArray } = require('./host-fixtures')
 
 describe('Host Endpoints', function () {
     let db;
@@ -49,20 +49,32 @@ describe('Host Endpoints', function () {
                 .expect(401, { error: 'Unauthorized request' });
         });
 
-        it(`responds with 401 Unauthorized for DELETE /api/hosts/:host_id`, () => {
+        it(`responds with 401 Unauthorized for PATCH /api/hosts/:host_id`, () => {
             const host = testHosts[1];
             return supertest(app)
-                .delete(`/api/hosts/${host.host_id}`)
+                .patch(`/api/hosts/${host.host_id}`)
+                .send({
+                    host_id: host_id,
+                    user_id: 1,
+                    event_id: 1,
+                })
+                .expect(401, { error: 'Unauthorized request' });
+        });
+
+        it(`responds with 401 Unauthorized for DELETE / api / hosts /: host_id`, () => {
+            const host = testHosts[1];
+            return supertest(app)
+                .delete(`/ api / hosts / ${host.host_id} `)
                 .expect(401, { error: 'Unauthorized request' });
         });
     });
 
-    describe(`GET /api/hosts`, () => {
+    describe(`GET / api / hosts`, () => {
         context(`Given no hosts`, () => {
             it(`responds with 200 and an empty list`, () => {
                 return supertest(app)
                     .get('/api/hosts')
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(200, [])
             });
         });
@@ -79,19 +91,19 @@ describe('Host Endpoints', function () {
             it('responds with 200 and all of the hosts', () => {
                 return supertest(app)
                     .get('/api/hosts')
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(200, testHosts)
             });
         });
     });
 
-    describe(`GET /api/hosts/:host_id`, () => {
+    describe(`GET / api / hosts /: host_id`, () => {
         context(`Given no host`, () => {
             it(`responds with 404`, () => {
                 const hostId = 123456;
                 return supertest(app)
-                    .get(`/api/hosts/${hostId}`)
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .get(`/ api / hosts / ${hostId} `)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(404, { error: { message: `Host does not exist` } });
             });
         });
@@ -107,14 +119,14 @@ describe('Host Endpoints', function () {
                 const hostId = 2;
                 const expectedHost = testHosts[hostId - 1];
                 return supertest(app)
-                    .get(`/api/hosts/${host_id}`)
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .get(`/ api / hosts / ${host_id} `)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(200, expectedHost);
             });
         });
     });
 
-    describe(`POST /api/hosts`, () => {
+    describe(`POST / api / hosts`, () => {
         const testHosts = makeHostsArray();
 
         beforeEach('insert hosts', () => {
@@ -131,18 +143,18 @@ describe('Host Endpoints', function () {
             return supertest(app)
                 .post('/api/hosts')
                 .send(newHost)
-                //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                 .expect(201)
                 .expect(res => {
                     expect(res.body.user_id).to.eql(newHost.user_id)
                     expect(res.body.event_id).to.eql(newHost.event_id)
                     expect(res.body).to.have.property('host_id')
-                    expect(res.headers.location).to.eql(`/api/hosts/${res.body.host_id}`)
+                    expect(res.headers.location).to.eql(`/ api / hosts / ${res.body.host_id} `)
                 })
                 .then(res =>
                     supertest(app)
-                        .get(`/api/hosts/${res.body.host_id}`)
-                        //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                        .get(`/ api / hosts / ${res.body.host_id} `)
+                        //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                         .expect(res.body)
                 );
         });
@@ -169,13 +181,13 @@ describe('Host Endpoints', function () {
         })
     });
 
-    describe(`DELETE /api/hosts/:host_id`, () => {
+    describe(`DELETE / api / hosts /: host_id`, () => {
         context(`Given no hosts`, () => {
             it(`responds with 404`, () => {
                 const hostId = 123456
                 return supertest(app)
-                    .delete(`/api/hosts/${hostId}`)
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .delete(`/ api / hosts / ${hostId} `)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(404, { error: { message: `Host does not exist` } })
             });
         });
@@ -193,26 +205,26 @@ describe('Host Endpoints', function () {
                 const idToRemove = 2
                 const expectedHosts = testHosts.filter(host => host.host_id !== idToRemove);
                 return supertest(app)
-                    .delete(`/api/hosts/${idToRemove}`)
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .delete(`/ api / hosts / ${idToRemove} `)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(204)
                     .then(res =>
                         supertest(app)
-                            .get(`/api/hosts`)
-                            //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                            .get(`/ api / hosts`)
+                            //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                             .expect(expectedHosts)
                     );
             });
         });
     });
 
-    describe(`PATCH /api/hosts/:host_id`, () => {
+    describe(`PATCH / api / hosts /: host_id`, () => {
         context(`Given no hosts`, () => {
             it(`responds with 404`, () => {
                 const hostId = 123456;
                 return supertest(app)
-                    .patch(`/api/hosts/${hostId}`)
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    .patch(`/ api / hosts / ${hostId} `)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(404, { error: { message: `Host does not exist` } })
             });
         });
@@ -237,14 +249,14 @@ describe('Host Endpoints', function () {
                     ...updateHost
                 }
                 return supertest(app)
-                    .patch(`/api/hosts/${idToUpdate}`)
+                    .patch(`/ api / hosts / ${idToUpdate} `)
                     .send(updateHost)
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(204)
                     .then(res =>
                         supertest(app)
-                            .get(`/api/hosts/${idToUpdate}`)
-                            //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                            .get(`/ api / hosts / ${idToUpdate} `)
+                            //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                             .expect(expectedHost)
                     );
             });
@@ -252,9 +264,9 @@ describe('Host Endpoints', function () {
             it(`responds with 400 when no required fields supplied`, () => {
                 const idToUpdate = 2;
                 return supertest(app)
-                    .patch(`/api/hosts/${idToUpdate}`)
+                    .patch(`/ api / hosts / ${idToUpdate} `)
                     .send({ irrelevantField: 'foo' })
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(400, {
                         error: {
                             message: `Request body must contain user_id or event_id`
@@ -274,17 +286,17 @@ describe('Host Endpoints', function () {
                 }
 
                 return supertest(app)
-                    .patch(`/api/hosts/${idToUpdate}`)
+                    .patch(`/ api / hosts / ${idToUpdate} `)
                     .send({
                         ...updateHost,
                         fieldToIgnore: 'should not be in GET response'
                     })
-                    //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                    //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                     .expect(204)
                     .then(res =>
                         supertest(app)
-                            .get(`/api/hosts/${idToUpdate}`)
-                            //.set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+                            .get(`/ api / hosts / ${idToUpdate} `)
+                            //.set('Authorization', `Bearer ${ process.env.API_TOKEN } `)
                             .expect(expectedHost)
                     );
             });

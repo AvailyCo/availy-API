@@ -141,7 +141,7 @@ groupsRouter
 
     const numOfValues = Object.values(memberPatch);
     if (numOfValues === 0) {
-      return res 
+      return res
         .status(400)
         .json({
           error: `Request body must contain 'member_level'`
@@ -158,7 +158,7 @@ groupsRouter
       })
       .catch(next);
   })
-  .delete(( req, res, next) => {
+  .delete((req, res, next) => {
     GroupService.removeMember(
       req.app.get('db'),
       req.params.memberId
