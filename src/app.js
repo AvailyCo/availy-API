@@ -14,6 +14,7 @@ const errorHandler = require('./error-handler');
 const contactsRouter = require('./contacts/contacts-router');
 const timezoneRouter = require('./timezone/timezone-router');
 const groupsRouter = require('./groups/groups-router');
+const membersRouter = require('./members/members-router');
 const eventsRouter = require('./events/events-router');
 const guestsRouter = require('./guests/guests-router');
 const hostsRouter = require('./hosts/hosts-router');
@@ -43,7 +44,8 @@ app.get('/api', (req, res) => {
 app.use('/api/contacts', contactsRouter);
 app.use('/api/timezones', timezoneRouter);
 app.use('/api/groups', groupsRouter);
-// app.use('/api/events', eventsRouter); <= do this next
+app.use('/api/members', membersRouter);
+app.use('/api/events', eventsRouter);
 app.use('/api/guests', guestsRouter);
 app.use('/api/hosts', hostsRouter);
 app.use('/api/users', usersRouter);

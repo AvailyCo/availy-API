@@ -18,6 +18,7 @@ groupsRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
+    // make group_images optional
     const { group_name, about_group, group_image, founder } = req.body;
     const newGroup = { group_name, about_group, group_image, founder };
 
@@ -40,7 +41,7 @@ groupsRouter
       .then(group => {
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `/${group.groupId}`))
+          .location(path.posix.join(req.originalUrl, `/${group.group_id}`))
           .json(GroupService.serializeGroup(group));
       })
       .catch(next);
@@ -86,62 +87,6 @@ groupsRouter
       .catch(next);
   })
 
-groupsRouter
-  .route('/:groupId/members')
-  .all(checkGroupExists)
-  .get((req, res, next) => {
-    GroupService.getGroupMembers(
-      req.app.get('db'),
-      req.params.groupId
-    )
-      .then(members => {
-        res.json(members.map(GroupService.serializeMember));
-      })
-      .catch(next);
-  })
-  .post(jsonParser, (req, res, next) => {
-    const { member_id, member_level, group_id } = req.body;
-    const newMember = { member_id, member_level, group_id };
-
-    for (const [key, value] of Object.entries(newMember)) {
-      if (value == null) {
-        return res
-          .status(400)
-          .json({
-            error: `Missing '${key}' in request body`
-          });
-      }
-    }
-
-    // newMember.group_id = req.params.groupId;
-
-    GroupService.addGroupMember(
-      req.app.get('db'),
-      newMember
-    )
-      .then(member => {
-        res
-          .status(201)
-          .location(path.posix.join(req.originalUrl, `/${newMember.group_id}`))
-          .json(GroupService.serializeMember(newMember));
-      })
-      .catch(next);
-  })
-  .delete((req, res, next) => {
-    const { member_id } = req.body;
-    const removeMemberID = { member_id }
-
-    GroupService.removeMember(
-      req.app.get('db'),
-      removeMemberID
-    )
-      .then(numRowsAffected => {
-        res
-          .status(204)
-          .end();
-      })
-      .catch(next);
-  })
 
 async function checkGroupExists(req, res, next) {
   try {

@@ -1,4 +1,7 @@
 BEGIN;
+
+TRUNCATE group_members RESTART IDENTITY CASCADE;
+
 INSERT INTO group_members(group_id, member_id, member_level, join_date)
 
 VALUES

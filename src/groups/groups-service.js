@@ -32,37 +32,6 @@ const GroupService = {
       .where({ groupid })
       .delete();
   },
-  getGroupMemberByID(db, member_id) {
-    return GroupService.getGroupMembers(db, member_id)
-      .where({ member_id })
-      .first();
-  },
-  addGroupMember(db, newMember) {
-    return db
-      .insert(newMember)
-      .into('group_members')
-      .returning('*')
-      .then(([members]) => members)
-      .then(member =>
-        GroupService.getGroupMemberByID(db, member.member_id)
-      );
-  },
-  getGroupMembers(db, group_id) {
-    return db
-      .from('group_members')
-      .select('*')
-      .where({ group_id })
-  },
-  patchMember(db, member_id, newMemberData) {
-    return db('group_members')
-      .where({ member_id })
-      .update(newMemberData);
-  },
-  removeMember(db, member_id) {
-    return db('group_members')
-      .where({ member_id })
-      .delete();
-  },
   serializeGroup(group) {
     return {
       groupid: group.groupid,
@@ -73,14 +42,6 @@ const GroupService = {
       about_group: xss(group.about_group),
     }
   },
-  serializeMember(member) {
-    return {
-      grpMemsId: member.grpMemsId,
-      member_id: member.member_id,
-      member_level: member.member_level,
-      join_date: member.join_date
-    }
-  }
 }
 
 module.exports = GroupService;
