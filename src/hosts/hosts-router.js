@@ -1,6 +1,5 @@
-const path = require('path')
-const express = require('express')
-const xss = require('xss')
+const path = require('path');
+const express = require('express');
 const logger = require('../logger');
 const HostsService = require('./hosts-service')
 const { getHostValidationError } = require('./validate-host');
@@ -8,10 +7,10 @@ const { getHostValidationError } = require('./validate-host');
 const HostsRouter = express.Router()
 const jsonParser = express.json()
 
-const serializeHost = host => ({
+const tempHost = host => ({
     host_id: host.host_id,
     user_id: host.user_id,
-    event_id: xss(host.event_id)
+    event_id: host.event_id
 });
 
 HostsRouter
@@ -21,7 +20,7 @@ HostsRouter
             req.app.get('db')
         )
             .then(hosts => {
-                res.json(hosts.map(serializeHost))
+                res.json(hosts.map(tempHost))
             })
             .catch(next)
     })
@@ -57,7 +56,7 @@ HostsRouter
                 res
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${host.host_id}`))
-                    .json(serializeHost(host))
+                    .json(host)
             })
             .catch(next)
     })
@@ -81,7 +80,7 @@ HostsRouter
             .catch(next)
     })
     .get((req, res, next) => {
-        res.json(serializeHost(res.host))
+        res.json(res.host)
     })
 
     .delete((req, res, next) => {

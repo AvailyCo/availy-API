@@ -1,4 +1,7 @@
 BEGIN;
+
+TRUNCATE contacts RESTART IDENTITY CASCADE;
+
 INSERT INTO contacts(user1_id, user2_id, blocked, blocked_by, date_connected)
 
 VALUES

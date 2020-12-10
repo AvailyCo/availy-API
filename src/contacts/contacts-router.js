@@ -1,7 +1,5 @@
 const path = require('path')
 const express = require('express')
-const xss = require('xss')
-const logger = require('../logger');
 const contactsService = require('./contacts-service');
 
 const bodyParser = express.json();
@@ -10,25 +8,21 @@ const contactsRouter = express.Router();
 
 contactsRouter
   .route('/')
-  .get(bodyParser, (req, res, next) => {
-    let userId = req.body.user1_id;
-    console.log(userId, "yooo")
-    contactsService.getAllContacts(req.app.get("db"), userId)
+  .get((req,res, next) => {
+    contactsService.getAllContacts(
+      req.app.get('db')
+    )
       .then(contacts => {
         res.status(200).json(contacts);
       })
       .catch(err => {
-        next(err);
-      });
+        next(err)});
   })
   .post(bodyParser, (req, res, next) => {
-    let userId = req.body.user1_id;
-    let contactId = req.body.user2_id;
     let newContact = {
-      user1_id: userId,
-      user2_id: contactId
+      user1_id: req.body.user1_id,
+      user2_id: req.body.user2_id
     };  
-
     contactsService.addContact(req.app.get("db"), newContact)
       .then(contacts => {
         res.status(200).json(contacts);
@@ -37,8 +31,22 @@ contactsRouter
         next(err);
       });
   })
+
+contactsRouter.route('/:userId')  
+  .get(bodyParser, (req, res, next) => {
+    let userId = req.params.userId;
+    console.log(userId, "yooo")
+    contactsService.getUserContacts(req.app.get("db"), userId)
+      .then(contacts => {
+        res.status(200).json(contacts);
+      })
+      .catch(err => {
+        next(err);
+      });
+  })
   .patch(bodyParser, (req, res, next) => {
-    let user1 = req.body.user1_id;
+    // include "blocked" true or false in body
+    let user1 = req.params.userId;
     let user2 = req.body.user2_id;
     let blockStatus = req.body.blocked;
     contactsService.getContactId(req.app.get("db"), user1, user2)
@@ -55,7 +63,7 @@ contactsRouter
       );
   })
   .delete(bodyParser, (req, res, next) => {
-    let user1 = req.body.user1_id;
+    let user1 = req.params.userId;
     let user2 = req.body.user2_id;
     contactsService.getContactId(req.app.get("db"), user1, user2)
       .then(result => {

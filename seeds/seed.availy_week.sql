@@ -1,4 +1,7 @@
 BEGIN;
+
+TRUNCATE week RESTART IDENTITY CASCADE;
+
 INSERT INTO week(sun_am_id, sun_pm_id, mon_am_id, mon_pm_id, tue_am_id, tue_pm_id, wed_am_id, wed_pm_id, thu_am_id, thu_pm_id, fri_am_id, fri_pm_id, sat_am_id, sat_pm_id, week_type)
 
 VALUES

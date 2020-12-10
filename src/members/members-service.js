@@ -4,16 +4,10 @@ const MemberService = {
       .select('*')
       .from('group_members')
   },
-  getGroupMembers(db, group_id) {
+  getMemberByID(db, grpmemsid) {
     return db
       .from('group_members')
-      .select('*')
-      .where({ group_id })
-  },
-  getMemberByID(db, member_id) {
-    return db
-      .from('group_members')
-      .where({ member_id })
+      .where({ grpmemsid })
       .first();
   },
   addGroupMember(db, newMember) {
@@ -26,14 +20,14 @@ const MemberService = {
         MemberService.getMemberByID(db, member.member_id)
       );
   },
-  patchMember(db, member_id, newMemberData) {
+  patchMember(db, grpmemsid, newMemberData) {
     return db('group_members')
-      .where({ member_id })
+      .where({ grpmemsid })
       .update(newMemberData);
   },
-  removeMember(db, member_id) {
+  removeMember(db, grpmemsid) {
     return db('group_members')
-      .where({ member_id })
+      .where({ grpmemsid })
       .delete();
   },
   serializeMember(member) {

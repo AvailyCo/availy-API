@@ -1,12 +1,12 @@
 const ThuPMService = {
-    getAllThuPM(knex) {
-        return knex.select('*').from('thu_pm');
+    getAllThuPM(db) {
+        return db.select('*').from('thu_pm');
     },
-    getThuPMById(knex, thu_pm_id) {
-        return knex.from('thu_pm').select('*').where('thu_pm_id', thu_pm_id).first();
+    getThuPMById(db, thu_pm_id) {
+        return db.from('thu_pm').select('*').where('thu_pm_id', thu_pm_id).first();
     },
-    insertThuPM(knex, newThuPM) {
-        return knex
+    insertThuPM(db, newThuPM) {
+        return db
             .insert(newThuPM)
             .into('thu_pm')
             .returning('*')
@@ -14,13 +14,13 @@ const ThuPMService = {
                 return rows[0]
             })
     },
-    deleteThuPM(knex, thu_pm_id) {
-        return knex('thu_pm')
+    deleteThuPM(db, thu_pm_id) {
+        return db('thu_pm')
             .where({ thu_pm_id })
             .delete()
     },
-    updateThuPM(knex, thu_pm_id, newThuPMFields) {
-        return knex('thu_pm')
+    updateThuPM(db, thu_pm_id, newThuPMFields) {
+        return db('thu_pm')
             .where({ thu_pm_id })
             .update(newThuPMFields)
     }

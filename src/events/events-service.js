@@ -1,20 +1,20 @@
 const xss = require('xss');
 
 const EventsService = {
-    getAllEvents(knex) {
-        return knex
+    getAllEvents(db) {
+        return db
             .select('*')
             .from('events');
     },
-    getEventById(knex, event_id) {
-        return knex
+    getEventById(db, event_id) {
+        return db
             .from('events')
             .select('*')
             .where('event_id', event_id)
             .first();
     },
-    postEvent(knex, newEvent) {
-        return knex
+    postEvent(db, newEvent) {
+        return db
             .insert(newEvent)
             .into('events')
             .returning('*')
@@ -22,17 +22,19 @@ const EventsService = {
                 return rows[0]
             })
     },
-    deleteEvent(knex, event_id) {
-        return knex('events')
+    deleteEvent(db, event_id) {
+        return db('events')
             .where({ event_id })
             .delete()
     },
-    patchEvent(knex, event_id, newEventFields) {
-        return knex('events')
+    patchEvent(db, event_id, newEventFields) {
+        return db('events')
             .where({ event_id })
             .update(newEventFields)
     },
-    getEventGuests(knex, event_id) {
+  
+    //temporarily save
+    /*getEventGuests(knex, event_id) {
         return knex
             .from('guests')
             .select('*')
@@ -63,30 +65,36 @@ const EventsService = {
             .where({ user_id })
             .delete();
     },
+    */
     serializeEvent(event) {
         return {
             event_id: event.event_id,
             event_name: xss(event.event_name),
             host_id: event.host_id,
             about_event: xss(event.about_event),
-            event_location: xss(event.event_location),
+            event_link: xss(event.event_link),
+            event_location_name: xss(event.event_location_name),
+            event_street: xss(event.event_street),
             event_city: xss(event.event_city),
             event_state: event.event_state,
             event_zip: event.event_zip,
-            event_time: event.event_time,
-            event_date: event.event_date,
+            event_start_time: event.event_start_time,
+            event_end_time: event.event_end_time,
+            event_start_date: event.event_start_date,
+            event_end_date: event.event_end_date,
             event_timezone: event.event_timezone,
             week_id: event.week_id
         }
     },
-    serializeGuest(guest) {
+    
+  /*serializeGuest(guest) {
         return {
             attending_id: guest.attending_id,
             event_id: guest.event_id,
             user_id: guest.user_id,
             attending: guest.attending
         }
-    }
+    }*/
 }
 
 module.exports = EventsService;

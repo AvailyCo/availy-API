@@ -1,4 +1,7 @@
 BEGIN;
+
+TRUNCATE users RESTART IDENTITY CASCADE;
+
 INSERT INTO users(username, firstname, lastname, email, password, aboutme, avatar, date_created, date_modified, timezone, weekId)
 
 VALUES

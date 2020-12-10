@@ -1,5 +1,8 @@
 /*https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations*/
 BEGIN;
+
+TRUNCATE timezone RESTART IDENTITY CASCADE;
+
 INSERT INTO timezone(zonename, zoneoffset, zonedesc)
 
 VALUES

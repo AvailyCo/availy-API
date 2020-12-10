@@ -1,4 +1,7 @@
 BEGIN;
+
+TRUNCATE groups RESTART IDENTITY CASCADE;
+
 INSERT INTO groups(group_name, group_image, founder, about_group, created_on)
 
 VALUES

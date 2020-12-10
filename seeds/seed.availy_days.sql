@@ -1,4 +1,23 @@
 BEGIN;
+
+TRUNCATE 
+    sat_PM,
+    sat_AM,
+    fri_PM,
+    fri_AM,
+    thu_PM,
+    thu_AM,
+    wed_PM,
+    wed_AM,
+    tue_PM,
+    tue_AM,
+    mon_PM,
+    mon_AM,
+    sun_PM,
+    sun_AM
+RESTART IDENTITY CASCADE;
+
+
 INSERT INTO sat_PM (sat_pm12, sat_pm1230, sat_pm1, sat_pm130, sat_pm2, sat_pm230, sat_pm3, sat_pm330, sat_pm4, sat_pm430, sat_pm5, sat_pm530, sat_pm6, sat_pm630, sat_pm7, sat_pm730, sat_pm8, sat_pm830, sat_pm9, sat_pm930, sat_pm10, sat_pm1030, sat_pm11, sat_pm1130)
 VALUES
     /*users calendar*/
