@@ -2,6 +2,11 @@ const contactsService = {
   getAllContacts(db) {
     return db.select('*').from('contacts');
   },
+  getContact(db, contactid) {
+    return db('contacts')
+      .select('*')
+      .where('contactid', contactid);
+  },
   getUserContacts(db, userId) {
     return db('contacts')
       .select('*')
