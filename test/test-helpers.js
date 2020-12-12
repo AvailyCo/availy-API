@@ -2,565 +2,563 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // Need to rework days to separate days based on tables
-// function makeDaysArray() {
-//   return [
-//     sat_PM = {
-//       sat_pm_id: 1,
-//       sat_pm12: 0,
-//       sat_pm1230: 0,
-//       sat_pm1: 0,
-//       sat_pm130: 0,
-//       sat_pm2: 0,
-//       sat_pm230: 0,
-//       sat_pm3: 0,
-//       sat_pm330: 0,
-//       sat_pm4: 0,
-//       sat_pm430: 0,
-//       sat_pm5: 0,
-//       sat_pm530: 0,
-//       sat_pm6: 0,
-//       sat_pm630: 0,
-//       sat_pm7: 0,
-//       sat_pm730: 0,
-//       sat_pm8: 0,
-//       sat_pm830: 0,
-//       sat_pm9: 0,
-//       sat_pm930: 0,
-//       sat_pm10: 0,
-//       sat_pm1030: 0,
-//       sat_pm11: 0,
-//       sat_pm1130: 0
-//     },
-//     sat_AM = {
-//       sat_am_id: 1,
-//       sat_am12: 0,
-//       sat_am1230: 0,
-//       sat_am1: 0,
-//       sat_am130: 0,
-//       sat_am2: 0,
-//       sat_am230: 0,
-//       sat_am3: 0,
-//       sat_am330: 0,
-//       sat_am4: 0,
-//       sat_am430: 0,
-//       sat_am5: 0,
-//       sat_am530: 0,
-//       sat_am6: 0,
-//       sat_am630: 0,
-//       sat_am7: 0,
-//       sat_am730: 0,
-//       sat_am8: 0,
-//       sat_am830: 0,
-//       sat_am9: 0,
-//       sat_am930: 0,
-//       sat_am10: 0,
-//       sat_am1030: 0,
-//       sat_am11: 0,
-//       sat_am1130: 0
-//     },
-//     fri_PM = {
-//       fri_pm_id: 1,
-//       fri_pm12: 0,
-//       fri_pm1230: 0,
-//       fri_pm1: 0,
-//       fri_pm130: 0,
-//       fri_pm2: 0,
-//       fri_pm230: 0,
-//       fri_pm3: 0,
-//       fri_pm330: 0,
-//       fri_pm4: 0,
-//       fri_pm430: 0,
-//       fri_pm5: 0,
-//       fri_pm530: 0,
-//       fri_pm6: 0,
-//       fri_pm630: 0,
-//       fri_pm7: 0,
-//       fri_pm730: 0,
-//       fri_pm8: 0,
-//       fri_pm830: 0,
-//       fri_pm9: 0,
-//       fri_pm930: 0,
-//       fri_pm10: 0,
-//       fri_pm1030: 0,
-//       fri_pm11: 0,
-//       fri_pm1130: 0
-//     },
-//     fri_AM = {
-//       fri_am_id: 1,
-//       fri_am12: 0,
-//       fri_am1230: 0,
-//       fri_am1: 0,
-//       fri_am130: 0,
-//       fri_am2: 0,
-//       fri_am230: 0,
-//       fri_am3: 0,
-//       fri_am330: 0,
-//       fri_am4: 0,
-//       fri_am430: 0,
-//       fri_am5: 0,
-//       fri_am530: 0,
-//       fri_am6: 0,
-//       fri_am630: 0,
-//       fri_am7: 0,
-//       fri_am730: 0,
-//       fri_am8: 0,
-//       fri_am830: 0,
-//       fri_am9: 0,
-//       fri_am930: 0,
-//       fri_am10: 0,
-//       fri_am1030: 0,
-//       fri_am11: 0,
-//       fri_am1130: 0
-//     },
-//     thu_PM = {
-//       thu_pm_id: 1,
-//       thu_pm12: 0,
-//       thu_pm1230: 0,
-//       thu_pm1: 0,
-//       thu_pm130: 0,
-//       thu_pm2: 0,
-//       thu_pm230: 0,
-//       thu_pm3: 0,
-//       thu_pm330: 0,
-//       thu_pm4: 0,
-//       thu_pm430: 0,
-//       thu_pm5: 0,
-//       thu_pm530: 0,
-//       thu_pm6: 0,
-//       thu_pm630: 0,
-//       thu_pm7: 0,
-//       thu_pm730: 0,
-//       thu_pm8: 0,
-//       thu_pm830: 0,
-//       thu_pm9: 0,
-//       thu_pm930: 0,
-//       thu_pm10: 0,
-//       thu_pm1030: 0,
-//       thu_pm11: 0,
-//       thu_pm1130: 0
-//     },
-//     thu_AM = {
-//       thu_am_id: 1,
-//       thu_am12: 0,
-//       thu_am1230: 0,
-//       thu_am1: 0,
-//       thu_am130: 0,
-//       thu_am2: 0,
-//       thu_am230: 0,
-//       thu_am3: 0,
-//       thu_am330: 0,
-//       thu_am4: 0,
-//       thu_am430: 0,
-//       thu_am5: 0,
-//       thu_am530: 0,
-//       thu_am6: 0,
-//       thu_am630: 0,
-//       thu_am7: 0,
-//       thu_am730: 0,
-//       thu_am8: 0,
-//       thu_am830: 0,
-//       thu_am9: 0,
-//       thu_am930: 0,
-//       thu_am10: 0,
-//       thu_am1030: 0,
-//       thu_am11: 0,
-//       thu_am1130: 0
-//     },
-//     wed_PM = {
-//       wed_pm_id: 1,
-//       wed_pm12: 0,
-//       wed_pm1230: 0,
-//       wed_pm1: 0,
-//       wed_pm130: 0,
-//       wed_pm2: 0,
-//       wed_pm230: 0,
-//       wed_pm3: 0,
-//       wed_pm330: 0,
-//       wed_pm4: 0,
-//       wed_pm430: 0,
-//       wed_pm5: 0,
-//       wed_pm530: 0,
-//       wed_pm6: 0,
-//       wed_pm630: 0,
-//       wed_pm7: 0,
-//       wed_pm730: 0,
-//       wed_pm8: 0,
-//       wed_pm830: 0,
-//       wed_pm9: 0,
-//       wed_pm930: 0,
-//       wed_pm10: 0,
-//       wed_pm1030: 0,
-//       wed_pm11: 0,
-//       wed_pm1130: 0
-//     },
-//     wed_AM = {
-//       wed_am_id: 1,
-//       wed_am12: 0,
-//       wed_am1230: 0,
-//       wed_am1: 0,
-//       wed_am130: 0,
-//       wed_am2: 0,
-//       wed_am230: 0,
-//       wed_am3: 0,
-//       wed_am330: 0,
-//       wed_am4: 0,
-//       wed_am430: 0,
-//       wed_am5: 0,
-//       wed_am530: 0,
-//       wed_am6: 0,
-//       wed_am630: 0,
-//       wed_am7: 0,
-//       wed_am730: 0,
-//       wed_am8: 0,
-//       wed_am830: 0,
-//       wed_am9: 0,
-//       wed_am930: 0,
-//       wed_am10: 0,
-//       wed_am1030: 0,
-//       wed_am11: 0,
-//       wed_am1130: 0
-//     },
-//     tue_PM = {
-//       tue_pm_id: 1,
-//       tue_pm12: 0,
-//       tue_pm1230: 0,
-//       tue_pm1: 0,
-//       tue_pm130: 0,
-//       tue_pm2: 0,
-//       tue_pm230: 0,
-//       tue_pm3: 0,
-//       tue_pm330: 0,
-//       tue_pm4: 0,
-//       tue_pm430: 0,
-//       tue_pm5: 0,
-//       tue_pm530: 0,
-//       tue_pm6: 0,
-//       tue_pm630: 0,
-//       tue_pm7: 0,
-//       tue_pm730: 0,
-//       tue_pm8: 0,
-//       tue_pm830: 0,
-//       tue_pm9: 0,
-//       tue_pm930: 0,
-//       tue_pm10: 0,
-//       tue_pm1030: 0,
-//       tue_pm11: 0,
-//       tue_pm1130: 0
-//     },
-//     tue_AM = {
-//       tue_am_id: 1,
-//       tue_am12: 0,
-//       tue_am1230: 0,
-//       tue_am1: 0,
-//       tue_am130: 0,
-//       tue_am2: 0,
-//       tue_am230: 0,
-//       tue_am3: 0,
-//       tue_am330: 0,
-//       tue_am4: 0,
-//       tue_am430: 0,
-//       tue_am5: 0,
-//       tue_am530: 0,
-//       tue_am6: 0,
-//       tue_am630: 0,
-//       tue_am7: 0,
-//       tue_am730: 0,
-//       tue_am8: 0,
-//       tue_am830: 0,
-//       tue_am9: 0,
-//       tue_am930: 0,
-//       tue_am10: 0,
-//       tue_am1030: 0,
-//       tue_am11: 0,
-//       tue_am1130: 0
-//     },
-//     mon_PM = {
-//       mon_pm_id: 1,
-//       mon_pm12: 0,
-//       mon_pm1230: 0,
-//       mon_pm1: 0,
-//       mon_pm130: 0,
-//       mon_pm2: 0,
-//       mon_pm230: 0,
-//       mon_pm3: 0,
-//       mon_pm330: 0,
-//       mon_pm4: 0,
-//       mon_pm430: 0,
-//       mon_pm5: 0,
-//       mon_pm530: 0,
-//       mon_pm6: 0,
-//       mon_pm630: 0,
-//       mon_pm7: 0,
-//       mon_pm730: 0,
-//       mon_pm8: 0,
-//       mon_pm830: 0,
-//       mon_pm9: 0,
-//       mon_pm930: 0,
-//       mon_pm10: 0,
-//       mon_pm1030: 0,
-//       mon_pm11: 0,
-//       mon_pm1130: 0
-//     },
-//     mon_AM = [
-//       {
-//         mon_am_id: 1,
-//         mon_am12: 0,
-//         mon_am1230: 0,
-//         mon_am1: 0,
-//         mon_am130: 0,
-//         mon_am2: 0,
-//         mon_am230: 0,
-//         mon_am3: 0,
-//         mon_am330: 0,
-//         mon_am4: 0,
-//         mon_am430: 0,
-//         mon_am5: 0,
-//         mon_am530: 0,
-//         mon_am6: 0,
-//         mon_am630: 0,
-//         mon_am7: 0,
-//         mon_am730: 0,
-//         mon_am8: 0,
-//         mon_am830: 0,
-//         mon_am9: 0,
-//         mon_am930: 0,
-//         mon_am10: 0,
-//         mon_am1030: 0,
-//         mon_am11: 0,
-//         mon_am1130: 0
-//       },
-//       {
-//         mon_am_id: 2,
-//         mon_am12: 1,
-//         mon_am1230: 1,
-//         mon_am1: 1,
-//         mon_am130: 1,
-//         mon_am2: 1,
-//         mon_am230: 1,
-//         mon_am3: 1,
-//         mon_am330: 1,
-//         mon_am4: 1,
-//         mon_am430: 1,
-//         mon_am5: 1,
-//         mon_am530: 1,
-//         mon_am6: 1,
-//         mon_am630: 1,
-//         mon_am7: 1,
-//         mon_am730: 1,
-//         mon_am8: 1,
-//         mon_am830: 1,
-//         mon_am9: 1,
-//         mon_am930: 1,
-//         mon_am10: 1,
-//         mon_am1030: 1,
-//         mon_am11: 1,
-//         mon_am1130: 1
-//       },
-//       {
-//         mon_am_id: 3,
-//         mon_am12: 0,
-//         mon_am1230: 1,
-//         mon_am1: 0,
-//         mon_am130: 1,
-//         mon_am2: 0,
-//         mon_am230: 1,
-//         mon_am3: 0,
-//         mon_am330: 1,
-//         mon_am4: 0,
-//         mon_am430: 1,
-//         mon_am5: 0,
-//         mon_am530: 1,
-//         mon_am6: 0,
-//         mon_am630: 1,
-//         mon_am7: 0,
-//         mon_am730: 1,
-//         mon_am8: 0,
-//         mon_am830: 1,
-//         mon_am9: 0,
-//         mon_am930: 1,
-//         mon_am10: 0,
-//         mon_am1030: 1,
-//         mon_am11: 0,
-//         mon_am1130: 1
-//       }
-//     ],
-//     sun_PM = [
-//       {
-//         sun_pm_id: 1,
-//         sun_pm12: 0,
-//         sun_pm1230: 0,
-//         sun_pm1: 0,
-//         sun_pm130: 0,
-//         sun_pm2: 0,
-//         sun_pm230: 0,
-//         sun_pm3: 0,
-//         sun_pm330: 0,
-//         sun_pm4: 0,
-//         sun_pm430: 0,
-//         sun_pm5: 0,
-//         sun_pm530: 0,
-//         sun_pm6: 0,
-//         sun_pm630: 0,
-//         sun_pm7: 0,
-//         sun_pm730: 0,
-//         sun_pm8: 0,
-//         sun_pm830: 0,
-//         sun_pm9: 0,
-//         sun_pm930: 0,
-//         sun_pm10: 0,
-//         sun_pm1030: 0,
-//         sun_pm11: 0,
-//         sun_pm1130: 0
-//       },
-//       {
-//         sun_pm_id: 2,
-//         sun_pm12: 1,
-//         sun_pm1230: 1,
-//         sun_pm1: 1,
-//         sun_pm130: 1,
-//         sun_pm2: 1,
-//         sun_pm230: 1,
-//         sun_pm3: 1,
-//         sun_pm330: 1,
-//         sun_pm4: 1,
-//         sun_pm430: 1,
-//         sun_pm5: 1,
-//         sun_pm530: 1,
-//         sun_pm6: 1,
-//         sun_pm630: 1,
-//         sun_pm7: 1,
-//         sun_pm730: 1,
-//         sun_pm8: 1,
-//         sun_pm830: 1,
-//         sun_pm9: 1,
-//         sun_pm930: 1,
-//         sun_pm10: 1,
-//         sun_pm1030: 1,
-//         sun_pm11: 1,
-//         sun_pm1130: 1
-//       },
-//       {
-//         sun_pm_id: 3,
-//         sun_pm12: 0,
-//         sun_pm1230: 1,
-//         sun_pm1: 0,
-//         sun_pm130: 1,
-//         sun_pm2: 0,
-//         sun_pm230: 1,
-//         sun_pm3: 0,
-//         sun_pm330: 1,
-//         sun_pm4: 0,
-//         sun_pm430: 1,
-//         sun_pm5: 0,
-//         sun_pm530: 1,
-//         sun_pm6: 0,
-//         sun_pm630: 1,
-//         sun_pm7: 0,
-//         sun_pm730: 1,
-//         sun_pm8: 0,
-//         sun_pm830: 1,
-//         sun_pm9: 0,
-//         sun_pm930: 1,
-//         sun_pm10: 0,
-//         sun_pm1030: 1,
-//         sun_pm11: 0,
-//         sun_pm1130: 1
-//       }
-//     ],
-//     sun_AM = [
-//       {
-//         sun_am_id: 1,
-//         sun_am12: 0,
-//         sun_am1230: 0,
-//         sun_am1: 0,
-//         sun_am130: 0,
-//         sun_am2: 0,
-//         sun_am230: 0,
-//         sun_am3: 0,
-//         sun_am330: 0,
-//         sun_am4: 0,
-//         sun_am430: 0,
-//         sun_am5: 0,
-//         sun_am530: 0,
-//         sun_am6: 0,
-//         sun_am630: 0,
-//         sun_am7: 0,
-//         sun_am730: 0,
-//         sun_am8: 0,
-//         sun_am830: 0,
-//         sun_am9: 0,
-//         sun_am930: 0,
-//         sun_am10: 0,
-//         sun_am1030: 0,
-//         sun_am11: 0,
-//         sun_am1130: 0
-//       },
-//       {
-//         sun_am_id: 2,
-//         sun_am12: 1,
-//         sun_am1230: 1,
-//         sun_am1: 1,
-//         sun_am130: 1,
-//         sun_am2: 1,
-//         sun_am230: 1,
-//         sun_am3: 1,
-//         sun_am330: 1,
-//         sun_am4: 1,
-//         sun_am430: 1,
-//         sun_am5: 1,
-//         sun_am530: 1,
-//         sun_am6: 1,
-//         sun_am630: 1,
-//         sun_am7: 1,
-//         sun_am730: 1,
-//         sun_am8: 1,
-//         sun_am830: 1,
-//         sun_am9: 1,
-//         sun_am930: 1,
-//         sun_am10: 1,
-//         sun_am1030: 1,
-//         sun_am11: 1,
-//         sun_am1130: 1
-//       },
-//       {
-//         sun_am_id: 3,
-//         sun_am12: 0,
-//         sun_am1230: 1,
-//         sun_am1: 0,
-//         sun_am130: 1,
-//         sun_am2: 0,
-//         sun_am230: 1,
-//         sun_am3: 0,
-//         sun_am330: 1,
-//         sun_am4: 0,
-//         sun_am430: 1,
-//         sun_am5: 0,
-//         sun_am530: 1,
-//         sun_am6: 0,
-//         sun_am630: 1,
-//         sun_am7: 0,
-//         sun_am730: 1,
-//         sun_am8: 0,
-//         sun_am830: 1,
-//         sun_am9: 0,
-//         sun_am930: 1,
-//         sun_am10: 0,
-//         sun_am1030: 1,
-//         sun_am11: 0,
-//         sun_am1130: 1
-//       }
-//     ]
-//   ]
-// }
-// function makeExpectedDay(day) {
+function makeDaysArray() {
+  return [
+    sat_PM = {
+      sat_pm_id: 1,
+      sat_pm12: 0,
+      sat_pm1230: 0,
+      sat_pm1: 0,
+      sat_pm130: 0,
+      sat_pm2: 0,
+      sat_pm230: 0,
+      sat_pm3: 0,
+      sat_pm330: 0,
+      sat_pm4: 0,
+      sat_pm430: 0,
+      sat_pm5: 0,
+      sat_pm530: 0,
+      sat_pm6: 0,
+      sat_pm630: 0,
+      sat_pm7: 0,
+      sat_pm730: 0,
+      sat_pm8: 0,
+      sat_pm830: 0,
+      sat_pm9: 0,
+      sat_pm930: 0,
+      sat_pm10: 0,
+      sat_pm1030: 0,
+      sat_pm11: 0,
+      sat_pm1130: 0
+    },
+    sat_AM = {
+      sat_am_id: 1,
+      sat_am12: 0,
+      sat_am1230: 0,
+      sat_am1: 0,
+      sat_am130: 0,
+      sat_am2: 0,
+      sat_am230: 0,
+      sat_am3: 0,
+      sat_am330: 0,
+      sat_am4: 0,
+      sat_am430: 0,
+      sat_am5: 0,
+      sat_am530: 0,
+      sat_am6: 0,
+      sat_am630: 0,
+      sat_am7: 0,
+      sat_am730: 0,
+      sat_am8: 0,
+      sat_am830: 0,
+      sat_am9: 0,
+      sat_am930: 0,
+      sat_am10: 0,
+      sat_am1030: 0,
+      sat_am11: 0,
+      sat_am1130: 0
+    },
+    fri_PM = {
+      fri_pm_id: 1,
+      fri_pm12: 0,
+      fri_pm1230: 0,
+      fri_pm1: 0,
+      fri_pm130: 0,
+      fri_pm2: 0,
+      fri_pm230: 0,
+      fri_pm3: 0,
+      fri_pm330: 0,
+      fri_pm4: 0,
+      fri_pm430: 0,
+      fri_pm5: 0,
+      fri_pm530: 0,
+      fri_pm6: 0,
+      fri_pm630: 0,
+      fri_pm7: 0,
+      fri_pm730: 0,
+      fri_pm8: 0,
+      fri_pm830: 0,
+      fri_pm9: 0,
+      fri_pm930: 0,
+      fri_pm10: 0,
+      fri_pm1030: 0,
+      fri_pm11: 0,
+      fri_pm1130: 0
+    },
+    fri_AM = {
+      fri_am_id: 1,
+      fri_am12: 0,
+      fri_am1230: 0,
+      fri_am1: 0,
+      fri_am130: 0,
+      fri_am2: 0,
+      fri_am230: 0,
+      fri_am3: 0,
+      fri_am330: 0,
+      fri_am4: 0,
+      fri_am430: 0,
+      fri_am5: 0,
+      fri_am530: 0,
+      fri_am6: 0,
+      fri_am630: 0,
+      fri_am7: 0,
+      fri_am730: 0,
+      fri_am8: 0,
+      fri_am830: 0,
+      fri_am9: 0,
+      fri_am930: 0,
+      fri_am10: 0,
+      fri_am1030: 0,
+      fri_am11: 0,
+      fri_am1130: 0
+    },
+    thu_PM = {
+      thu_pm_id: 1,
+      thu_pm12: 0,
+      thu_pm1230: 0,
+      thu_pm1: 0,
+      thu_pm130: 0,
+      thu_pm2: 0,
+      thu_pm230: 0,
+      thu_pm3: 0,
+      thu_pm330: 0,
+      thu_pm4: 0,
+      thu_pm430: 0,
+      thu_pm5: 0,
+      thu_pm530: 0,
+      thu_pm6: 0,
+      thu_pm630: 0,
+      thu_pm7: 0,
+      thu_pm730: 0,
+      thu_pm8: 0,
+      thu_pm830: 0,
+      thu_pm9: 0,
+      thu_pm930: 0,
+      thu_pm10: 0,
+      thu_pm1030: 0,
+      thu_pm11: 0,
+      thu_pm1130: 0
+    },
+    thu_AM = {
+      thu_am_id: 1,
+      thu_am12: 0,
+      thu_am1230: 0,
+      thu_am1: 0,
+      thu_am130: 0,
+      thu_am2: 0,
+      thu_am230: 0,
+      thu_am3: 0,
+      thu_am330: 0,
+      thu_am4: 0,
+      thu_am430: 0,
+      thu_am5: 0,
+      thu_am530: 0,
+      thu_am6: 0,
+      thu_am630: 0,
+      thu_am7: 0,
+      thu_am730: 0,
+      thu_am8: 0,
+      thu_am830: 0,
+      thu_am9: 0,
+      thu_am930: 0,
+      thu_am10: 0,
+      thu_am1030: 0,
+      thu_am11: 0,
+      thu_am1130: 0
+    },
+    wed_PM = {
+      wed_pm_id: 1,
+      wed_pm12: 0,
+      wed_pm1230: 0,
+      wed_pm1: 0,
+      wed_pm130: 0,
+      wed_pm2: 0,
+      wed_pm230: 0,
+      wed_pm3: 0,
+      wed_pm330: 0,
+      wed_pm4: 0,
+      wed_pm430: 0,
+      wed_pm5: 0,
+      wed_pm530: 0,
+      wed_pm6: 0,
+      wed_pm630: 0,
+      wed_pm7: 0,
+      wed_pm730: 0,
+      wed_pm8: 0,
+      wed_pm830: 0,
+      wed_pm9: 0,
+      wed_pm930: 0,
+      wed_pm10: 0,
+      wed_pm1030: 0,
+      wed_pm11: 0,
+      wed_pm1130: 0
+    },
+    wed_AM = {
+      wed_am_id: 1,
+      wed_am12: 0,
+      wed_am1230: 0,
+      wed_am1: 0,
+      wed_am130: 0,
+      wed_am2: 0,
+      wed_am230: 0,
+      wed_am3: 0,
+      wed_am330: 0,
+      wed_am4: 0,
+      wed_am430: 0,
+      wed_am5: 0,
+      wed_am530: 0,
+      wed_am6: 0,
+      wed_am630: 0,
+      wed_am7: 0,
+      wed_am730: 0,
+      wed_am8: 0,
+      wed_am830: 0,
+      wed_am9: 0,
+      wed_am930: 0,
+      wed_am10: 0,
+      wed_am1030: 0,
+      wed_am11: 0,
+      wed_am1130: 0
+    },
+    tue_PM = {
+      tue_pm_id: 1,
+      tue_pm12: 0,
+      tue_pm1230: 0,
+      tue_pm1: 0,
+      tue_pm130: 0,
+      tue_pm2: 0,
+      tue_pm230: 0,
+      tue_pm3: 0,
+      tue_pm330: 0,
+      tue_pm4: 0,
+      tue_pm430: 0,
+      tue_pm5: 0,
+      tue_pm530: 0,
+      tue_pm6: 0,
+      tue_pm630: 0,
+      tue_pm7: 0,
+      tue_pm730: 0,
+      tue_pm8: 0,
+      tue_pm830: 0,
+      tue_pm9: 0,
+      tue_pm930: 0,
+      tue_pm10: 0,
+      tue_pm1030: 0,
+      tue_pm11: 0,
+      tue_pm1130: 0
+    },
+    tue_AM = {
+      tue_am_id: 1,
+      tue_am12: 0,
+      tue_am1230: 0,
+      tue_am1: 0,
+      tue_am130: 0,
+      tue_am2: 0,
+      tue_am230: 0,
+      tue_am3: 0,
+      tue_am330: 0,
+      tue_am4: 0,
+      tue_am430: 0,
+      tue_am5: 0,
+      tue_am530: 0,
+      tue_am6: 0,
+      tue_am630: 0,
+      tue_am7: 0,
+      tue_am730: 0,
+      tue_am8: 0,
+      tue_am830: 0,
+      tue_am9: 0,
+      tue_am930: 0,
+      tue_am10: 0,
+      tue_am1030: 0,
+      tue_am11: 0,
+      tue_am1130: 0
+    },
+    mon_PM = {
+      mon_pm_id: 1,
+      mon_pm12: 0,
+      mon_pm1230: 0,
+      mon_pm1: 0,
+      mon_pm130: 0,
+      mon_pm2: 0,
+      mon_pm230: 0,
+      mon_pm3: 0,
+      mon_pm330: 0,
+      mon_pm4: 0,
+      mon_pm430: 0,
+      mon_pm5: 0,
+      mon_pm530: 0,
+      mon_pm6: 0,
+      mon_pm630: 0,
+      mon_pm7: 0,
+      mon_pm730: 0,
+      mon_pm8: 0,
+      mon_pm830: 0,
+      mon_pm9: 0,
+      mon_pm930: 0,
+      mon_pm10: 0,
+      mon_pm1030: 0,
+      mon_pm11: 0,
+      mon_pm1130: 0
+    },
+    mon_AM = [
+      {
+        mon_am_id: 1,
+        mon_am12: 0,
+        mon_am1230: 0,
+        mon_am1: 0,
+        mon_am130: 0,
+        mon_am2: 0,
+        mon_am230: 0,
+        mon_am3: 0,
+        mon_am330: 0,
+        mon_am4: 0,
+        mon_am430: 0,
+        mon_am5: 0,
+        mon_am530: 0,
+        mon_am6: 0,
+        mon_am630: 0,
+        mon_am7: 0,
+        mon_am730: 0,
+        mon_am8: 0,
+        mon_am830: 0,
+        mon_am9: 0,
+        mon_am930: 0,
+        mon_am10: 0,
+        mon_am1030: 0,
+        mon_am11: 0,
+        mon_am1130: 0
+      },
+      {
+        mon_am_id: 2,
+        mon_am12: 1,
+        mon_am1230: 1,
+        mon_am1: 1,
+        mon_am130: 1,
+        mon_am2: 1,
+        mon_am230: 1,
+        mon_am3: 1,
+        mon_am330: 1,
+        mon_am4: 1,
+        mon_am430: 1,
+        mon_am5: 1,
+        mon_am530: 1,
+        mon_am6: 1,
+        mon_am630: 1,
+        mon_am7: 1,
+        mon_am730: 1,
+        mon_am8: 1,
+        mon_am830: 1,
+        mon_am9: 1,
+        mon_am930: 1,
+        mon_am10: 1,
+        mon_am1030: 1,
+        mon_am11: 1,
+        mon_am1130: 1
+      },
+      {
+        mon_am_id: 3,
+        mon_am12: 0,
+        mon_am1230: 1,
+        mon_am1: 0,
+        mon_am130: 1,
+        mon_am2: 0,
+        mon_am230: 1,
+        mon_am3: 0,
+        mon_am330: 1,
+        mon_am4: 0,
+        mon_am430: 1,
+        mon_am5: 0,
+        mon_am530: 1,
+        mon_am6: 0,
+        mon_am630: 1,
+        mon_am7: 0,
+        mon_am730: 1,
+        mon_am8: 0,
+        mon_am830: 1,
+        mon_am9: 0,
+        mon_am930: 1,
+        mon_am10: 0,
+        mon_am1030: 1,
+        mon_am11: 0,
+        mon_am1130: 1
+      }
+    ],
+    sun_PM = [
+      {
+        sun_pm_id: 1,
+        sun_pm12: 0,
+        sun_pm1230: 0,
+        sun_pm1: 0,
+        sun_pm130: 0,
+        sun_pm2: 0,
+        sun_pm230: 0,
+        sun_pm3: 0,
+        sun_pm330: 0,
+        sun_pm4: 0,
+        sun_pm430: 0,
+        sun_pm5: 0,
+        sun_pm530: 0,
+        sun_pm6: 0,
+        sun_pm630: 0,
+        sun_pm7: 0,
+        sun_pm730: 0,
+        sun_pm8: 0,
+        sun_pm830: 0,
+        sun_pm9: 0,
+        sun_pm930: 0,
+        sun_pm10: 0,
+        sun_pm1030: 0,
+        sun_pm11: 0,
+        sun_pm1130: 0
+      },
+      {
+        sun_pm_id: 2,
+        sun_pm12: 1,
+        sun_pm1230: 1,
+        sun_pm1: 1,
+        sun_pm130: 1,
+        sun_pm2: 1,
+        sun_pm230: 1,
+        sun_pm3: 1,
+        sun_pm330: 1,
+        sun_pm4: 1,
+        sun_pm430: 1,
+        sun_pm5: 1,
+        sun_pm530: 1,
+        sun_pm6: 1,
+        sun_pm630: 1,
+        sun_pm7: 1,
+        sun_pm730: 1,
+        sun_pm8: 1,
+        sun_pm830: 1,
+        sun_pm9: 1,
+        sun_pm930: 1,
+        sun_pm10: 1,
+        sun_pm1030: 1,
+        sun_pm11: 1,
+        sun_pm1130: 1
+      },
+      {
+        sun_pm_id: 3,
+        sun_pm12: 0,
+        sun_pm1230: 1,
+        sun_pm1: 0,
+        sun_pm130: 1,
+        sun_pm2: 0,
+        sun_pm230: 1,
+        sun_pm3: 0,
+        sun_pm330: 1,
+        sun_pm4: 0,
+        sun_pm430: 1,
+        sun_pm5: 0,
+        sun_pm530: 1,
+        sun_pm6: 0,
+        sun_pm630: 1,
+        sun_pm7: 0,
+        sun_pm730: 1,
+        sun_pm8: 0,
+        sun_pm830: 1,
+        sun_pm9: 0,
+        sun_pm930: 1,
+        sun_pm10: 0,
+        sun_pm1030: 1,
+        sun_pm11: 0,
+        sun_pm1130: 1
+      }
+    ],
+    sun_AM = [
+      {
+        sun_am_id: 1,
+        sun_am12: 0,
+        sun_am1230: 0,
+        sun_am1: 0,
+        sun_am130: 0,
+        sun_am2: 0,
+        sun_am230: 0,
+        sun_am3: 0,
+        sun_am330: 0,
+        sun_am4: 0,
+        sun_am430: 0,
+        sun_am5: 0,
+        sun_am530: 0,
+        sun_am6: 0,
+        sun_am630: 0,
+        sun_am7: 0,
+        sun_am730: 0,
+        sun_am8: 0,
+        sun_am830: 0,
+        sun_am9: 0,
+        sun_am930: 0,
+        sun_am10: 0,
+        sun_am1030: 0,
+        sun_am11: 0,
+        sun_am1130: 0
+      },
+      {
+        sun_am_id: 2,
+        sun_am12: 1,
+        sun_am1230: 1,
+        sun_am1: 1,
+        sun_am130: 1,
+        sun_am2: 1,
+        sun_am230: 1,
+        sun_am3: 1,
+        sun_am330: 1,
+        sun_am4: 1,
+        sun_am430: 1,
+        sun_am5: 1,
+        sun_am530: 1,
+        sun_am6: 1,
+        sun_am630: 1,
+        sun_am7: 1,
+        sun_am730: 1,
+        sun_am8: 1,
+        sun_am830: 1,
+        sun_am9: 1,
+        sun_am930: 1,
+        sun_am10: 1,
+        sun_am1030: 1,
+        sun_am11: 1,
+        sun_am1130: 1
+      },
+      {
+        sun_am_id: 3,
+        sun_am12: 0,
+        sun_am1230: 1,
+        sun_am1: 0,
+        sun_am130: 1,
+        sun_am2: 0,
+        sun_am230: 1,
+        sun_am3: 0,
+        sun_am330: 1,
+        sun_am4: 0,
+        sun_am430: 1,
+        sun_am5: 0,
+        sun_am530: 1,
+        sun_am6: 0,
+        sun_am630: 1,
+        sun_am7: 0,
+        sun_am730: 1,
+        sun_am8: 0,
+        sun_am830: 1,
+        sun_am9: 0,
+        sun_am930: 1,
+        sun_am10: 0,
+        sun_am1030: 1,
+        sun_am11: 0,
+        sun_am1130: 1
+      }
+    ]
+  ]
+}
+function makeExpectedDay(day) {
 
-// }
-// function makeMaliciousDay() {
+}
 
-// }
-// function seedDays (db, days) {
+function seedDays (db, days) {
 
-// }
+}
 
 
 
@@ -620,68 +618,64 @@ function makeMaliciousTimezone(zone) {
   }
 }
 
-function seedTimezone (){
-
-}
 
 
 
 
-
-function makeWeekArray() {
+function makeWeekArray(days) {
   return [
     {
       weekId: 1,
-      sun_am_id: 1,
-      sun_pm_id: 1,
-      mon_am_id: 1,
-      mon_pm_id: 1,
-      tue_am_id: 1,
-      tue_pm_id: 1,
-      wed_am_id: 1,
-      wed_pm_id: 1,
-      thu_am_id: 1,
-      thu_pm_id: 1,
-      fri_am_id: 1,
-      fri_pm_id: 1,
-      sat_am_id: 1,
-      sat_pm_id: 1,
+      sun_am_id: days[0].sun_am_id,
+      sun_pm_id: days[0].sun_pm_id,
+      mon_am_id: days[0].mon_am_id,
+      mon_pm_id: days[0].mon_pm_id,
+      tue_am_id: days[0].tue_am_id,
+      tue_pm_id: days[0].tue_pm_id,
+      wed_am_id: days[0].wed_am_id,
+      wed_pm_id: days[0].wed_pm_id,
+      thu_am_id: days[0].thu_am_id,
+      thu_pm_id: days[0].thu_pm_id,
+      fri_am_id: days[0].fri_am_id,
+      fri_pm_id: days[0].fri_pm_id,
+      sat_am_id: days[0].sat_am_id,
+      sat_pm_id: days[0].sat_pm_id,
       weekType: 'availability'
     },
     {
       weekId: 2,
-      sun_am_id: 2,
-      sun_pm_id: 2,
-      mon_am_id: 2,
-      mon_pm_id: 2,
-      tue_am_id: 2,
-      tue_pm_id: 2,
-      wed_am_id: 2,
-      wed_pm_id: 2,
-      thu_am_id: 2,
-      thu_pm_id: 2,
-      fri_am_id: 2,
-      fri_pm_id: 2,
-      sat_am_id: 2,
-      sat_pm_id: 2,
+      sun_am_id: days[1].sun_am_id,
+      sun_pm_id: days[1].sun_pm_id,
+      mon_am_id: days[1].mon_am_id,
+      mon_pm_id: days[1].mon_pm_id,
+      tue_am_id: days[1].tue_am_id,
+      tue_pm_id: days[1].tue_pm_id,
+      wed_am_id: days[1].wed_am_id,
+      wed_pm_id: days[1].wed_pm_id,
+      thu_am_id: days[1].thu_am_id,
+      thu_pm_id: days[1].thu_pm_id,
+      fri_am_id: days[1].fri_am_id,
+      fri_pm_id: days[1].fri_pm_id,
+      sat_am_id: days[1].sat_am_id,
+      sat_pm_id: days[1].sat_pm_id,
       weekType: 'availability'
     },
     {
       weekId: 3,
-      sun_am_id: 3,
-      sun_pm_id: 3,
-      mon_am_id: 3,
-      mon_pm_id: 3,
-      tue_am_id: 3,
-      tue_pm_id: 3,
-      wed_am_id: 3,
-      wed_pm_id: 3,
-      thu_am_id: 3,
-      thu_pm_id: 3,
-      fri_am_id: 3,
-      fri_pm_id: 3,
-      sat_am_id: 3,
-      sat_pm_id: 3,
+      sun_am_id: days[2].sun_am_id,
+      sun_pm_id: days[2].sun_pm_id,
+      mon_am_id: days[2].mon_am_id,
+      mon_pm_id: days[2].mon_pm_id,
+      tue_am_id: days[2].tue_am_id,
+      tue_pm_id: days[2].tue_pm_id,
+      wed_am_id: days[2].wed_am_id,
+      wed_pm_id: days[2].wed_pm_id,
+      thu_am_id: days[2].thu_am_id,
+      thu_pm_id: days[2].thu_pm_id,
+      fri_am_id: days[2].fri_am_id,
+      fri_pm_id: days[2].fri_pm_id,
+      sat_am_id: days[2].sat_am_id,
+      sat_pm_id: days[2].sat_pm_id,
       weekType: 'event'
     }
   ]
@@ -706,11 +700,34 @@ function makeExpectedWeek(week) {
     weekType: week.weekType
   }
 }
-function makeMaliciousWeek() {
+function makeMaliciousWeek(week) {
+  const maliciousWeek = {
+    weekId: 911,
+    sun_am_id: week.sun_am_id,
+    sun_pm_id: week.sun_pm_id,
+    mon_am_id: week.mon_am_id,
+    mon_pm_id: week.mon_pm_id,
+    tue_am_id: week.tue_am_id,
+    tue_pm_id: week.tue_pm_id,
+    wed_am_id: week.wed_am_id,
+    wed_pm_id: week.wed_pm_id,
+    thu_am_id: week.thu_am_id,
+    thu_pm_id: week.thu_pm_id,
+    fri_am_id: week.fri_am_id,
+    fri_pm_id: week.fri_pm_id,
+    sat_am_id: week.sat_am_id,
+    sat_pm_id: week.sat_pm_id,
+    weekType: `H4x0r <script>alert("xss");</script>`
+  };
+  const expectedWeek = {
+    ...makeExpectedWeek(maliciousWeek),
+    weekType: `H4x0r &lt;script&gt;alert(\"xss\");&lt;/script&gt;`
+  };
 
-}
-function seedWeeks() {
-
+  return {
+    maliciousWeek,
+    expectedWeek
+  }
 }
 
 
@@ -752,12 +769,6 @@ function makeExpectedContact(c) {
     blocked_by: c.blocked_by,
     date_connected: c.date_connected
   }
-}
-function makeMaliciousContact() {
-
-}
-function seedContacts() {
-
 }
 
 
@@ -836,11 +847,43 @@ function makeExpectedEvent(event) {
     week_id: event.week_id
   }
 }
-function makeMaliciousEvent() {
-
-}
-function seedEvents() {
-
+function makeMaliciousEvent(timezone, week) {
+  const maliciousEvent = {
+    event_id: 911,
+    event_name: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    about_event: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+    event_link: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    event_location_name: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    event_street: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+    event_city: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+    event_state: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+    event_zip: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
+    event_start_time: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    event_end_time: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    event_start_date: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    event_end_date: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    event_timezone: timezone.timezoneid,
+    week_id: week.weekId
+  };
+  const expectedEvent = {
+    ...makeExpectedEvent([timezone],[week], maliciousEvent),
+    event_name: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+    about_event: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    event_link: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+    event_location_name: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+    event_street: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    event_city: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    event_state: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    event_zip: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    event_start_time: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+    event_end_time: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+    event_start_date: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+    event_end_date: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
+  };
+  return {
+    maliciousEvent,
+    expectedEvent
+  }
 }
 
 
@@ -870,12 +913,6 @@ function makeExpectedHost(h) {
     user_id: h.user_id,
     event_id: h.event_id
   }
-}
-function makeMaliciousHost() {
-
-}
-function seedHosts() {
-
 }
 
 
@@ -910,16 +947,10 @@ function makeExpectedGuest(g) {
     attending: g.attending
   }
 }
-function makeMaliciousGuest() {
-
-}
-function seedGuests() {
-
-}
 
 
 
-function makeUsersArray() {
+function makeUsersArray(timezones, weeks) {
   return [{
     userId: 1,
     username: 'Test User 1',
@@ -931,8 +962,8 @@ function makeUsersArray() {
     avatar: 'https://robohash.org/PA7.png?set=set4&size=150x150',
     date_created: new Date('2020-01-01T16:28:32.615Z'),
     date_modified: now(),
-    timezone: 8,
-    weekId: 1
+    timezone: timezones[0].timezoneid,
+    weekId: weeks[0].weekId
   },
   {
     userId: 2,
@@ -945,8 +976,8 @@ function makeUsersArray() {
     avatar: 'https://robohash.org/PA7.png?set=set4&size=150x150',
     date_created: new Date('2020-03-21T16:28:32.615Z'),
     date_modified: now(),
-    timezone: 5,
-    weekId: 1
+    timezone: timezones[1].timezoneid,
+    weekId: weeks[1].weekId
   },
   {
     userId: 3,
@@ -959,8 +990,8 @@ function makeUsersArray() {
     avatar: 'https://robohash.org/PA7.png?set=set4&size=150x150',
     date_created: new Date('2020-01-01T16:28:32.615Z'),
     date_modified: now(),
-    timezone: 1,
-    weekId: 1
+    timezone: timezones[2].timezoneid,
+    weekId: weeks[2].weekId
   }]
 };
 
@@ -1031,40 +1062,40 @@ function makeGroupFixtures() {
   return { testUsers, testGroups };
 }
 
-function makeMembersArray() {
+function makeMembersArray(groups, users) {
   return [
-    {
+    { // UserID 1 Founded GroupID 1
       grpMemsId: 1,
-      group_id: 1,
-      member_id: 1,
+      group_id: groups[0],
+      member_id: users[0],
       member_level: 'Founder',
       join_date: now()
     },
-    {
+    { // UserID 2 Founded GroupID 2
       grpMemsId: 2,
-      group_id: 1,
-      member_id: 2,
+      group_id: groups[1],
+      member_id: users[1],
       member_level: 'Founder',
       join_date: now()
     },
-    {
+    { // UserID 3 Applied to GroupID 1
       grpMemsId: 3,
-      group_id: 1,
-      member_id: 3,
+      group_id: groups[0],
+      member_id: users[2],
       member_level: 'Applicant',
       join_date: now()
     },
-    {
+    { // UserID 2 Founded GroupID 3
       grpMemsId: 4,
-      group_id: 2,
-      member_id: 3,
+      group_id: groups[2],
+      member_id: users[1],
       member_level: 'Founder',
       join_date: now()
     },
-    {
+    { // UserID 3 is Admin of GroupID 3
       grpMemsId: 5,
-      group_id: 2,
-      member_id: 2,
+      group_id: groups[2],
+      member_id: users[2],
       member_level: 'Admin',
       join_date: now()
     }
@@ -1098,9 +1129,7 @@ function makeMaliciousMember(user, group){
     expectedMember
   };
 }
-function seedMembers() {
 
-}
 
 function cleanTables(db) {
   return db.transaction(trx => {
@@ -1183,6 +1212,31 @@ function cleanTables(db) {
   })
 }
 
+
+function seedTimezoneTables (db, timezones){
+  return db.transaction(async trx => {
+    await trx.into('timezone').insert(timezones);
+
+    await trx.raw(
+      `SELECT setval('timezoneid_seq', ?)`, [timezones[timezone.length - 1].timezoneid],
+    )
+  })
+}
+function seedMaliciousTimezone(db, timezone) {
+  return db.into('timezone').insert([timezone]);
+}
+
+
+
+function seedWeeks() {
+
+}
+function seedMaliciousWeeks() {
+  
+}
+
+
+
 function seedUsers(db, users) {
   const preppedUsers = users.map(user => ({
     ...user,
@@ -1200,6 +1254,10 @@ function seedUsers(db, users) {
     );
 }
 
+function seedContacts() {
+
+}
+
 function seedGroupsTables(db, users, groups) {
   // use a transaction to group the queries. auto rollback on any failures
   return db.transaction(async trx => {
@@ -1211,7 +1269,6 @@ function seedGroupsTables(db, users, groups) {
     );
   });
 }
-
 function seedMaliciousGroup(db, user, group) {
   return seedUsers(db, [user])
     .then(() =>
@@ -1220,6 +1277,38 @@ function seedMaliciousGroup(db, user, group) {
         .insert([group])
     );
 }
+
+function seedMembers() {
+
+}
+function seedMaliciousMember() {
+  
+}
+
+
+function seedEvents() {
+
+}
+function seedMaliciousEvent() {
+  
+}
+
+
+function makeMaliciousHost() {
+
+}
+function seedHosts() {
+
+}
+
+
+function makeMaliciousGuest() {
+
+}
+function seedGuests() {
+
+}
+
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
