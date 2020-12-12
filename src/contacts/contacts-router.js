@@ -32,10 +32,49 @@ contactsRouter
       });
   })
 
-contactsRouter.route('/:userId')  
+// route to GET/PATCH/DELETE contact based off of contactId
+contactsRouter.route('/:contactId')
+  .get((req, res, next) => {
+    let contactId = req.params.contactId;
+    contactsService.getContact(req.app.get("db"), contactId)
+      .then(contacts => {
+        res.status(200).json(contacts);
+      })
+      .catch(err => {
+        next(err);
+      });
+  })
+  .patch(bodyParser, (req, res, next) => {
+    // include "blocked" true or false in body
+    // include "blocked_by" userid in body
+    let contactId = req.params.contactId;
+    let blockStatus = req.body.blocked;
+    let blocked_by = req.body.blocked_by;
+    contactsService.blockContact(req.app.get("db"), contactId, blockStatus, blocked_by)
+      .then(contacts => {
+        res.status(200).json(contacts);
+      })
+      .catch(err => {
+        next(err);
+      });
+  })
+  .delete((req, res, next) => {
+    let contactId = req.params.contactId;
+    contactsService.deleteContact(req.app.get("db"), contactId)
+      .then(contacts => {
+        res.status(200).json(contacts);
+      })
+      .catch(err => {
+        next(err);
+      });
+  });
+  
+
+// route for specific user's contact's list
+// route to get/patch/delete based off of userId's
+contactsRouter.route('/user/:userId')  
   .get(bodyParser, (req, res, next) => {
     let userId = req.params.userId;
-    console.log(userId, "yooo")
     contactsService.getUserContacts(req.app.get("db"), userId)
       .then(contacts => {
         res.status(200).json(contacts);
